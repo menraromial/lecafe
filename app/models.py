@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.html import mark_safe
 from authuser.models import User
+import os
 
 STATUT_COMMANDE =(
     ('VALIDE', 'Plat servi'),
@@ -31,10 +32,10 @@ class Categorie(models.Model):
     def get_absolute_url(self):
         return reverse("detail_item", kwargs={"slug": self.slug})
     
-    def save(self, *args, **kwargs):  # new
-        if not self.slug:
-            self.slug = slugify(self.title)
-        return super().save(*args, **kwargs)
+    #def save(self, *args, **kwargs):  # new
+    #    if not self.slug:
+    #        self.slug = slugify(self.nom + '-' +self.id)
+    #    return super().save(*args, **kwargs)
 
 class Ingredient(models.Model):
     nom = models.CharField(max_length=256)
@@ -47,16 +48,16 @@ class Ingredient(models.Model):
         return self.nom
 
     def get_absolute_url(self):
-        return reverse("detail_item", kwargs={"slug": self.slug})
+        return reverse("detail_ingredient", kwargs={"slug": self.id})
     
     def get_image(self): #new
-        return mark_safe(f'<img src = "{self.image.url}" width = "300"/>')
+        return mark_safe(f'<img src = "{self.image.url}" height="50" width = "50"/>')
 
 class Item(models.Model):
     nom = models.CharField(max_length=256)
     cout = models.DecimalField(max_digits=999999999,decimal_places=2)
     ancien_cout = models.DecimalField(max_digits=999999999,decimal_places=2)
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True, null=True)
     categorie = models.ForeignKey(Categorie, on_delete=models.SET_NULL, null=True)
     ingredients = models.ManyToManyField(Ingredient)
     image = models.ImageField(upload_to=get_image_path)
@@ -75,9 +76,15 @@ class Item(models.Model):
 
     def save(self, *args, **kwargs):  # new
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(self.nom + '-' + self.cout)
         return super().save(*args, **kwargs)
 
+class ItemImages(models.Model):
+    images = models.ImageField(upload_to=get_image_path, default='item.png')
+    item = models.ForeignKey(Item, on_delete=models.SET_NULL,null=True)
+
+    class Meta:
+        verbose_name_plural="Item Images"
 class CartOrder(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     #items = models.ManyToManyField(Item)
@@ -85,6 +92,10 @@ class CartOrder(models.Model):
     numero_table = models.CharField(max_length=100)
     date = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name="Commande"
+        verbose_name_plural="Commandes"
 
     def __str__(self):
         return "commandé par " + self.user.username
@@ -103,4 +114,25 @@ class CartOrderItems(models.Model):
     qty = models.IntegerField(default=0)
     price = models.DecimalField(max_digits=9999999, decimal_places=2, default="1.9")
 
+    class Meta:
+        verbose_name_plural="Cart Order Items"
 
+    def get_image(self): #new
+        return mark_safe(f'<img src = "/media/{self.image}" height="50" width = "50"/>')
+
+
+class ItemReview(models.Model):
+    item=models.ForeignKey(Item, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    review = models.TextField()
+    rating = models.SmallIntegerField(choices=RATING, default=None)
+    date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural="Item Reviews"
+    
+    def __str__(self):
+        return self.item.nom
+    
+    def get_ratin(self):
+        return self.rating
