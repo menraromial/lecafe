@@ -6,8 +6,11 @@ from django.conf import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("app.urls")),
-    path("auth/", include("authuser.urls")),
+    path("", include("app.urls", namespace="app")),
+    path("auth/", include("authuser.urls", namespace='authuser')),
+    path('cart/', include('cart.urls',namespace='cart')),
+    path('orders/', include('orders.urls',namespace='orders')),
+    path('coupons/', include('coupons.urls', namespace='coupons')),
 ]
 
 if settings.DEBUG:

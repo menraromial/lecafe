@@ -10,6 +10,7 @@ To get started with this project, follow these steps:
 2. Create a virtual environment using `virtualenv` or `venv`.
 3. Activate the virtual environment.
 4. Install the required packages using `pip install -r requirements.txt`.
+
 5. Create a `db.sqlite3` file in the project root directory 
 6. Run migrations using `python manage.py migrate`.
 7. Create a superuser `python manage.py createsuperuser`.

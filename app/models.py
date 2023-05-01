@@ -30,7 +30,7 @@ class Categorie(models.Model):
         return self.nom
 
     def get_absolute_url(self):
-        return reverse("detail_item", kwargs={"slug": self.slug})
+        return reverse("detail_categorie", kwargs={"slug": self.slug})
     
     #def save(self, *args, **kwargs):  # new
     #    if not self.slug:
@@ -48,23 +48,32 @@ class Ingredient(models.Model):
         return self.nom
 
     def get_absolute_url(self):
-        return reverse("detail_ingredient", kwargs={"slug": self.id})
+        return reverse("detail_ingredient", kwargs={"slug": self.slug})
     
     def get_image(self): #new
         return mark_safe(f'<img src = "{self.image.url}" height="50" width = "50"/>')
 
 class Item(models.Model):
-    nom = models.CharField(max_length=256)
-    cout = models.DecimalField(max_digits=999999999,decimal_places=2)
-    ancien_cout = models.DecimalField(max_digits=999999999,decimal_places=2)
+    title = models.CharField(max_length=256)
+    price = models.DecimalField(max_digits=10,decimal_places=2)
+    ancien_cout = models.DecimalField(max_digits=10,decimal_places=2)
     description = models.TextField(blank=True, null=True)
     categorie = models.ForeignKey(Categorie, on_delete=models.SET_NULL, null=True)
-    ingredients = models.ManyToManyField(Ingredient)
     image = models.ImageField(upload_to=get_image_path)
     slug = models.SlugField(unique=True,null=False)
+    available = models.BooleanField(default=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['title']
+        indexes = [
+            models.Index(fields=['id', 'slug']),
+            models.Index(fields=['title']),
+            models.Index(fields=['-created']),]
+            
     def __str__(self):
-        return self.nom
+        return self.title
     def get_absolute_url(self):
         return reverse("detail_item", kwargs={"slug": self.slug})
 
@@ -72,19 +81,23 @@ class Item(models.Model):
         return mark_safe(f'<img src = "{self.image.url}" height="50" width = "50"/>')
     
     def get_percentage(self):
-        return (self.cout/self.ancien_cout)*100
+        return (self.price/self.ancien_cout)*100
 
     def save(self, *args, **kwargs):  # new
         if not self.slug:
-            self.slug = slugify(self.nom + '-' + self.cout)
+            self.slug = slugify(self.nom + ' ' + self.price)
         return super().save(*args, **kwargs)
 
 class ItemImages(models.Model):
     images = models.ImageField(upload_to=get_image_path, default='item.png')
     item = models.ForeignKey(Item, on_delete=models.SET_NULL,null=True)
-
     class Meta:
         verbose_name_plural="Item Images"
+class ItemIngredients(models.Model):
+    item=models.ForeignKey(Item, on_delete=models.CASCADE)
+    Ingredient=models.ForeignKey(Ingredient, on_delete=models.SET_NULL, null=True)
+    class Meta:
+        verbose_name_plural="Item Ingredients"
 class CartOrder(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     #items = models.ManyToManyField(Item)
