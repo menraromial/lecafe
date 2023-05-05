@@ -16,3 +16,11 @@ def about_page(request):
 def blog_view(request):
 
     return render(request, "pages/blogs.html")
+
+def menu_view(request):
+
+    return render(request, 'pages/menu.html')
+
+def product_details(request):
+
+    return render(request, 'pages/product-details.html')
