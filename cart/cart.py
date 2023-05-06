@@ -42,9 +42,11 @@ class Cart:
         items = Item.objects.filter(id__in=item_ids)
         cart = self.cart.copy()
         for item in items:
-            cart[str(item.id)]['item'] = item
+            cart[str(item.id)]['item_image'] = item.image.url
+            cart[str(item.id)]['item_title'] = item.title
+            cart[str(item.id)]['id'] = item.id
         for item in cart.values():
-            item['price'] = Decimal(item['price'])
+            item['price'] = float(item['price'])
             item['total_price'] = item['price']*item['quantity']
             yield item
     

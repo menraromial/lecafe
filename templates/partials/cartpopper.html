@@ -1,6 +1,6 @@
 
 {% load static %}
-<div class="cart-popup">
+<div class="cart-popup" id="cartpopper">
     <button type='button' class='close' onclick='$(this).parent().removeClass("show-cart");'>×</button>
 
 
@@ -11,19 +11,19 @@
 
         <div class="p-img light-bg">
 
-          <img src="{{ food.item.image.url }}" alt="Product Image">
+          <img src="{{ food.item_image }}" alt="Product Image">
 
         </div>
 
         <div class="p-data">
 
-          <h3 class="font-semi-bold">{{ food.item.title }}</h3>
+          <h3 class="font-semi-bold">{{ food.item_title }}</h3>
 
           <p class="theme-clr font-semi-bold">{{food.quantity}} x fcfa{{food.price}}</p>
 
         </div>
-
-        <a href="JavaScript:void(0)" id="crosss"></a>
+        
+        <button id="remove-from-cart" class="remove-from-cart" data-index="{{food.id}}"><a href="JavaScript:void(0)" ></a></button>
 
       </li>
       

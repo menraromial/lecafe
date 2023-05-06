@@ -4,6 +4,7 @@ from app.models import Item
 from .cart import Cart
 from coupons.forms import CouponApplyForm
 from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 @require_POST
 def cart_add(request):
@@ -14,16 +15,18 @@ def cart_add(request):
     override_quantity = int(request.POST.get('oqty'))
     if quantity:
         cart.add(item=item,quantity=quantity, override_quantity=override_quantity)
-    data={'ok':'ok'}
-    return JsonResponse(data)
+    context=render_to_string('async/cart-list.html',{'cart':cart})
+    return JsonResponse({'data':context, 'total_items':len(cart)})
 
-@require_POST
-def cart_remove(request, item_id):
+#@require_POST
+def cart_remove(request):
+    item_id = request.GET['id']
     cart = Cart(request)
     item = get_object_or_404(Item, id=item_id)
     cart.remove(item)
 
-    return #A json
+    context=render_to_string('async/cart-list.html',{'cart':cart})
+    return JsonResponse({'data':context, 'total_items':len(cart)})
 
 def cart_details(request):
     cart=Cart(request)

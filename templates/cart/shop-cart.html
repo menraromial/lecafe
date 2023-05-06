@@ -47,54 +47,36 @@
                             <th class="product-name">Product</th>
                             <th class="product-quantity">Quantity</th>
                             <th class="product-subtotal">Total</th>
+                            <th class="product-subtotal">Delete</th>
+                            <th class="product-subtotal">Update</th>
                         </tr>
                     </thead>
                     <tbody>
+                     {% for item in cart %}
                         <tr>
                             <td class="product-name">
-                                <img alt="img" src="{% static 'assets/img/product-1.png' %}">
+                                <img alt="img" src="{{item.item_image}}">
                                 <div>
-                                    <a href="#">Blue Cheese & Ham</a>
+                                    <a href="#">{{item.item_title}}</a>
                                     <span>Sausage, three rashers of streaky bacon</span>
                                 </div>
                             </td>
                             <td class="product-quantity">
-                                <input type="number" class="input-text" value="1">
+                                <input type="number" class="input-text" value="{{item.quantity}}">
                             </td>
                             <td class="product-subtotal">
-                                <span class="woocommerce-Price-amount"><bdi><span class="woocommerce-Price-currencySymbol">$</span>9.00</bdi></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="product-name">
-                                <img alt="img" src="{% static 'assets/img/product-1.png' %}">
-                                <div>
-                                    <a href="#">Blue Cheese & Ham</a>
-                                    <span>Sausage, three rashers of streaky bacon</span>
-                                </div>
-                            </td>
-                            <td class="product-quantity">
-                                <input type="number" class="input-text" value="1">
+                                <span class="woocommerce-Price-amount"><bdi><span class="woocommerce-Price-currencySymbol">fcfa </span>{{item.price}}</bdi></span>
                             </td>
                             <td class="product-subtotal">
-                                <span class="woocommerce-Price-amount"><bdi><span class="woocommerce-Price-currencySymbol">$</span>9.00</bdi></span>
-                            </td>
+                              <button style="border: none;background-color: transparent;"><i class="fa fa-trash" style="color: #f3274c;" aria-hidden="true"></i>
+                              </button>
+                          </td>
+                          <td class="product-subtotal">
+                           <button style="border: none;background-color: transparent;"><i class="fa fa-refresh" style="color: #f3274c;" aria-hidden="true"></i>
+                           </button>
+                       </td>
                         </tr>
-                        <tr>
-                            <td class="product-name">
-                                <img alt="img" src="{% static 'assets/img/product-1.png' %}">
-                                <div>
-                                    <a href="#">Blue Cheese & Ham</a>
-                                    <span>Sausage, three rashers of streaky bacon</span>
-                                </div>
-                            </td>
-                            <td class="product-quantity">
-                                <input type="number" class="input-text" value="1">
-                            </td>
-                            <td class="product-subtotal">
-                                <span class="woocommerce-Price-amount"><bdi><span class="woocommerce-Price-currencySymbol">$</span>9.00</bdi></span>
-                            </td>
-                        </tr>
+                     {% endfor %}
                     </tbody>
                     <tfoot>
                            <tr class="coupon">
@@ -130,7 +112,7 @@
                                     <td>
                                        <span class="woocommerce-Price-amount">
                                                   <bdi>
-                                          <span class="woocommerce-Price-currencySymbol">$</span>250.00
+                                          <span class="woocommerce-Price-currencySymbol">fcfa </span>{{cart.get_total_price}}
                                        </bdi>
                                        </span>
                                     </td>
@@ -148,7 +130,7 @@
                                      <td>
                                         <span class="woocommerce-Price-amount">
                                         <bdi>
-                                           <span>$</span>250.00
+                                           <span>fcfa </span>{{cart.get_total_price}}
                                         </bdi>
                                         </span>
                                      </td>
