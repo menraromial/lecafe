@@ -3,17 +3,19 @@ from django.views.decorators.http import require_POST
 from app.models import Item
 from .cart import Cart
 from coupons.forms import CouponApplyForm
+from django.http import JsonResponse
 
 @require_POST
-def cart_add(request, item_id):
+def cart_add(request):
+    item_id=request.POST.get('item-id')
     cart = Cart(request)
     item = get_object_or_404(Item, id=item_id)
-    quantity = request.POST.get('qty')
-    override_quantity = request.POST.get('oqty')
+    quantity = int(request.POST.get('qty'))
+    override_quantity = int(request.POST.get('oqty'))
     if quantity:
         cart.add(item=item,quantity=quantity, override_quantity=override_quantity)
-    
-    return #A JSON
+    data={'ok':'ok'}
+    return JsonResponse(data)
 
 @require_POST
 def cart_remove(request, item_id):

@@ -16,12 +16,12 @@ class ItemAdmin(admin.ModelAdmin):
     search_fields=['nom', 'description']
     list_filter=['categorie', 'available', 'created', 'updated']
     list_editable = ['price', 'available']
-    prepopulated_fields={'slug':['price','price']}
+    prepopulated_fields={'slug':['title']}
     #filter(function, iterable)
 
 @admin.register(Categorie)
 class CategorieAdmin(admin.ModelAdmin):
-    list_display=['nom', 'slug']
+    list_display=['nom','get_image', 'slug']
     prepopulated_fields={'slug':['nom']}
 
 @admin.register(Ingredient)

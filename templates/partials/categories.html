@@ -7,51 +7,23 @@
           <div class="line"></div>
        </div>
        <div class="choosecategory owl-carousel owl-theme">
+
+          {% if categories %}
+          {% for category in categories %}
           <div class="item">
              <div class="category-choose">
                 <div class="category-choose-img">
-                   <img alt="Category" src="{% static 'assets/img/category-1.jpg' %}">
+                   <img alt="Category" src="{{category.image.url}}">
                 </div>
-                <a href="#"><h3>Organic Food</h3></a>
-                <span>12 Dishes in the Menu</span>
+                <a href="{% url 'app:c-details' category.slug %}"><h3>{{category.nom}}</h3></a>
+                <span>{{category.item_set.count}} item dans le menu</span>
              </div>
           </div>
-          <div class="item">
-             <div class="category-choose">
-                <div class="category-choose-img">
-                   <img alt="Category" src="{% static 'assets/img/category-2.jpg' %}">
-                </div>
-                <a href="#"><h3>Zinger Burgers</h3></a>
-                <span>04 Dishes in the Menu</span>
-             </div>
-          </div>
-          <div class="item">
-             <div class="category-choose">
-                <div class="category-choose-img">
-                   <img alt="Category" src="{% static 'assets/img/category-3.jpg' %}">
-                </div>
-                <a href="#"><h3>Grill Food</h3></a>
-                <span>12 Dishes in the Menu</span>
-             </div>
-          </div>
-          <div class="item">
-             <div class="category-choose">
-                <div class="category-choose-img">
-                   <img alt="Category" src="{% static 'assets/img/category-4.jpg' %}">
-                </div>
-                <a href="#"><h3>Bar B Q</h3></a>
-                <span>12 Dishes in the Menu</span>
-             </div>
-          </div>
-          <div class="item">
-             <div class="category-choose">
-                <div class="category-choose-img">
-                   <img alt="Category" src="{% static 'assets/img/category-2.jpg' %}">
-                </div>
-                <a href="#"><h3>Zinger Burgers</h3></a>
-                <span>04 Dishes in the Menu</span>
-             </div>
-          </div>
+          {% endfor %}
+          {% else %}
+          <h2>Rien dans le menu</h2>
+          {% endif %}
+
        </div>
     </div>
  </section>

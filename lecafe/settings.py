@@ -30,7 +30,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     #Applications tiers
-    #"import_export",
+    #"django_resized ",
+    "taggit",
     #Applications
     "app.apps.AppConfig",
     "authuser.apps.AuthuserConfig",
@@ -63,6 +64,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 'cart.context_processors.cart',
+                'app.context_processors.category',
             ],
         },
     },
@@ -130,3 +132,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CART_SESSION_ID = 'cart'
+
+
+JAZZMIN_SETTINGS = {
+    # title of the window (Will default to current_admin_site.site_title if absent or None)
+    "site_title": "Le Café Admin",
+
+    # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+    "site_header": "Le Café",
+
+    # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+    "site_brand": "Le Café",
+
+    # Logo to use for your site, must be present in static files, used for brand on top left
+    "site_logo": "assets/img/logo.png",
+}
