@@ -18,7 +18,7 @@ table.shop_table td.product-name a:hover,
 span.theme-bg-clr,.fa-trash,
 .navbar-links li.navbar-dropdown .dropdown a:hover{
    
-    color: #f3274c;
+    color: #5b464a;
 
 }
 /* Background Color */
@@ -43,11 +43,11 @@ a.font-bold.theme-bg-clr.text-white.checkout,
 .navbar-links li.navbar-dropdown a:hover:not(:last-child):before
 {
 
-    background-color:#f3274c;
+    background-color:#5b464a;
 
 }
 
 .swal-icon--success{
-    border-color:#f3274c;
+    border-color:#5b464a;
 
 }

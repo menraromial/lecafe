@@ -38,65 +38,59 @@
    </div>
 </section>
 <section class="gap">
-   <div class="container">
-      <form class="woocommerce-cart-form">
+   {% if cart|length >= 1 %}
+   <div class="container" id="cart-list-table-container">
+      <div class="woocommerce-cart-form" id="cart-list-table">
             <div style="overflow-x:auto;overflow-y: hidden;">
               <table class="shop_table table-responsive">
                     <thead>
                         <tr>
                             <th class="product-name">Product</th>
-                            <th class="product-quantity">Quantity</th>
+                            <th class="product-quantity">quantité</th>
                             <th class="product-subtotal">Total</th>
-                            <th class="product-subtotal">Delete</th>
-                            <th class="product-subtotal">Update</th>
+                            <th class="product-subtotal">Supprimer</th>
+                            <th class="product-subtotal">Rafraichir</th>
                         </tr>
                     </thead>
                     <tbody>
                      {% for item in cart %}
                         <tr>
                             <td class="product-name">
-                                <img alt="img" src="{{item.item_image}}">
+                                <img alt="img/{{item.item_title}}" height="50" width = "50" src="{{item.item_image}}">
                                 <div>
                                     <a href="#">{{item.item_title}}</a>
-                                    <span>Sausage, three rashers of streaky bacon</span>
+                                    
                                 </div>
                             </td>
                             <td class="product-quantity">
-                                <input type="number" class="input-text" value="{{item.quantity}}">
+                                <input type="number" id="qty-{{item.id}}" class="input-text" value="{{item.quantity}}">
+                                <input type="hidden" id="oqty-{{item.id}}" value="1">
                             </td>
                             <td class="product-subtotal">
-                                <span class="woocommerce-Price-amount"><bdi><span class="woocommerce-Price-currencySymbol">fcfa </span>{{item.price}}</bdi></span>
+                                <span class="woocommerce-Price-amount"><bdi><span class="woocommerce-Price-currencySymbol">fcfa </span><span id="price-{{item.id}}">{{item.total_price}}</span></bdi></span>
                             </td>
                             <td class="product-subtotal">
-                              <button style="border: none;background-color: transparent;"><i class="fa fa-trash" style="color: #f3274c;" aria-hidden="true"></i>
+                              <button class="delete-item-btn" data-index="{{item.id}}" style="border: none;background-color: transparent;"><i class="fa fa-trash" style="color: #f3274c;" ></i>
                               </button>
                           </td>
                           <td class="product-subtotal">
-                           <button style="border: none;background-color: transparent;"><i class="fa fa-refresh" style="color: #f3274c;" aria-hidden="true"></i>
+                           {% csrf_token %}
+                           <button class="update-item-btn" data-index="{{item.id}}"  style="border: none;background-color: transparent;"><i class="fa fa-refresh" style="color: #8d8284;" aria-hidden="true"></i>
                            </button>
                        </td>
                         </tr>
                      {% endfor %}
                     </tbody>
-                    <tfoot>
-                           <tr class="coupon">
-                              <td colspan="3">
-                                 <div class="d-flex align-items-center justify-content-between">
-                                    <button type="submit" name="apply_coupon" class="apply-coupon" value="Apply coupon">Apply coupon</button>
-                                    <button type="submit" name="update_cart" class="update-cart" value="Update cart" disabled="" aria-disabled="true">Update Cart</button>
-                                 </div>
-                              </td>
-                           </tr>
-                    </tfoot>
+
               </table>
             </div>
-         <div class="row mt-5">
+         <div class="row mt-5" id="total_price">
             <div class="col-lg-4">
                <div class="coupon-area">
                      <h3>Apply Coupon</h3>
                      <div class="coupon">
                         <input type="text" name="coupon_code" class="input-text" placeholder="Coupon Code">
-                        <button type="submit" name="apply_coupon"><span>Apply coupon</span>
+                        <button type="submit" id="tes-click" name="apply_coupon"><span>Apply coupon</span>
                         </button>
                      </div>
                </div>
@@ -112,7 +106,7 @@
                                     <td>
                                        <span class="woocommerce-Price-amount">
                                                   <bdi>
-                                          <span class="woocommerce-Price-currencySymbol">fcfa </span>{{cart.get_total_price}}
+                                          <span class="woocommerce-Price-currencySymbol total-price">fcfa </span>{{cart.get_total_price}}
                                        </bdi>
                                        </span>
                                     </td>
@@ -130,7 +124,7 @@
                                      <td>
                                         <span class="woocommerce-Price-amount">
                                         <bdi>
-                                           <span>fcfa </span>{{cart.get_total_price}}
+                                           <span class="total-price">fcfa </span>{{cart.get_total_price}}
                                         </bdi>
                                         </span>
                                      </td>
@@ -146,8 +140,12 @@
                      </div>
             </div>
          </div>
-      </form>
+      </div>
    </div>
+   {% else %}
+   <h2>Votre pannier est vide!! </>
+   {% endif %}
 </section>
+
 
 {% endblock content %}

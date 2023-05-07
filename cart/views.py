@@ -15,8 +15,18 @@ def cart_add(request):
     override_quantity = int(request.POST.get('oqty'))
     if quantity:
         cart.add(item=item,quantity=quantity, override_quantity=override_quantity)
+        #print(cart.get_total_price())
+    #cart.get_total_item_price(item_id)
+    #print(cart.get_total_price())
+    item_t_price=cart.get_total_item_price(item_id)
     context=render_to_string('async/cart-list.html',{'cart':cart})
-    return JsonResponse({'data':context, 'total_items':len(cart)})
+    total_price = render_to_string('async/total_price.html',{'cart':cart})
+    return JsonResponse({
+        'data':context, 
+        'total_items':len(cart),
+        'total_price':total_price,
+        'item_t_price':item_t_price
+        })
 
 #@require_POST
 def cart_remove(request):
@@ -26,7 +36,8 @@ def cart_remove(request):
     cart.remove(item)
 
     context=render_to_string('async/cart-list.html',{'cart':cart})
-    return JsonResponse({'data':context, 'total_items':len(cart)})
+    total_price = render_to_string('async/total_price.html',{'cart':cart})
+    return JsonResponse({'cart_list':context,'total_price':total_price, 'total_items':len(cart)})
 
 def cart_details(request):
     cart=Cart(request)

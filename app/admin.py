@@ -1,5 +1,4 @@
 from django.contrib import admin
-from import_export import resources
 from app.models import Categorie, Ingredient, Item, ItemImages, ItemReview,ItemIngredients
 
 

@@ -1,0 +1,58 @@
+{% if cart|length >= 1 %}
+<div class="col-lg-4">
+    <div class="coupon-area">
+          <h3>Apply Coupon</h3>
+          <div class="coupon">
+             <input type="text" name="coupon_code" class="input-text" placeholder="Coupon Code">
+             <button type="submit" id="tes-click" name="apply_coupon"><span>Apply coupon</span>
+             </button>
+          </div>
+    </div>
+ </div>
+ <div class="col-lg-8">
+    <div class="cart_totals">
+          <h4>Cart Totals</h4>
+          <div class="shop_table-boder">
+             <table class="shop_table_responsive">
+                <tbody>
+                   <tr class="cart-subtotal">
+                         <th>Sub total:</th>
+                         <td>
+                            <span class="woocommerce-Price-amount">
+                                       <bdi>
+                               <span class="woocommerce-Price-currencySymbol total-price">fcfa </span>{{cart.get_total_price}}
+                            </bdi>
+                            </span>
+                         </td>
+                   </tr>
+                   <tr class="Shipping">
+                         <th>Shipping:</th>
+                         <td>
+                            <span class="woocommerce-Price-amount amount">
+                                           free
+                            </span>
+                         </td>
+                    </tr>
+                    <tr class="Total">
+                          <th>Total:</th>
+                          <td>
+                             <span class="woocommerce-Price-amount">
+                             <bdi>
+                                <span class="total-price">fcfa </span>{{cart.get_total_price}}
+                             </bdi>
+                             </span>
+                          </td>
+                     </tr>
+                 </tbody>
+             </table>
+          </div>
+           <div class="wc-proceed-to-checkout">
+             <a href="#" class="button">
+                <span>Proceed to checkout</span>
+                </a>
+       </div>
+          </div>
+ </div>
+ {% else %}
+ <h2> Pannier vide </>
+{% endif %}

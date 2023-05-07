@@ -90,3 +90,9 @@ db.sqlite3
 static/assets/images/
 static/assets/img/
 media/
+app/migrations/
+authuser/migrations/
+blog/migrations/
+orders/migrations/
+coupons/migrations/
+cart/migrations/
