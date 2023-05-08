@@ -37,7 +37,13 @@ def cart_remove(request):
 
     context=render_to_string('async/cart-list.html',{'cart':cart})
     total_price = render_to_string('async/total_price.html',{'cart':cart})
-    return JsonResponse({'cart_list':context,'total_price':total_price, 'total_items':len(cart)})
+    get_total_price = cart.get_total_price()
+    return JsonResponse({
+        'cart_list':context,
+        'total_price':total_price, 
+        'total_items':len(cart),
+        'get_total_price':get_total_price
+        })
 
 def cart_details(request):
     cart=Cart(request)

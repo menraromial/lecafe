@@ -1,7 +1,7 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,5 +47,6 @@
  <!-- Form Script -->
  <script src="{% static 'assets/js/contact.js' %}"></script>
  <script type="text/javascript" src="{% static 'assets/js/sweetalert.min.js' %}"></script>
+ {% block script %}{% endblock script %}
  </body>
- 
+ </html>

@@ -7,11 +7,11 @@
     <ul>
      {% for food in cart %}
      
-      <li class="d-flex align-items-center position-relative">
+      <li class="d-flex align-items-center position-relative" id="item-{{food.id}}">
 
         <div class="p-img light-bg">
 
-          <img src="{{ food.item_image }}" alt="Product Image">
+          <img src="{{ food.item_image }}" height="50" width = "50" alt="Product Image">
 
         </div>
 
@@ -19,7 +19,7 @@
 
           <h3 class="font-semi-bold">{{ food.item_title }}</h3>
 
-          <p class="theme-clr font-semi-bold">{{food.quantity}} x fcfa{{food.price}}</p>
+          <p class="theme-clr font-semi-bold">{{food.quantity}} x fcfa {{food.price}}</p>
 
         </div>
         
@@ -30,11 +30,11 @@
     {% endfor %}
     </ul>
 
-      <div class="cart-total d-flex align-items-center justify-content-between">
+      <div class="cart-total d-flex align-items-center justify-content-between" id="cartpopper-total-price-container">
 
         <span class="font-semi-bold">Total:</span>
 
-        <span class="font-semi-bold">fcfa {{cart.get_total_price}}</span>
+        <span class="font-semi-bold" id="cartpopper-total-price">fcfa {{cart.get_total_price}}</span>
 
       </div>
 

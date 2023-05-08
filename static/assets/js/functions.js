@@ -1,9 +1,10 @@
 
 
 jQuery(document).ready(function(){
+
+
 //Add to cart functionality
-
-
+//From product details pages
 jQuery('#add_to_cart_form').on('submit',function(e) {  //Don't foget to change the id form
     jQuery.ajax({
         url:'/cart/add/', 
@@ -24,9 +25,39 @@ jQuery('#add_to_cart_form').on('submit',function(e) {  //Don't foget to change t
       e.preventDefault(); //This is to Avoid Page Refresh and Fire the Event "Click"
 });
 
+//From Menus or Home page
+jQuery('.add_to_cart').on('click',function(e) { 
+  let index = $(this).attr('data-index')
+  let qty = $('#qty-'+index).val()
+  let oqty = $('#oqty-'+index).val()
+  let token=$('input[name=csrfmiddlewaretoken]').val()
 
+  jQuery.ajax({
+      url:'/cart/add/', 
+      data:{
+      'item-id':index,
+      'qty':qty,
+      'oqty':oqty,
+      csrfmiddlewaretoken:token
+         },
+      type:'POST',
+      success:function(response){
+      $('#cartpopper').html(response.data)
+      $('#cart-len').text(response.total_items)
+      //console.log('total_item',response.total_items)
+        //Success Message == 'Title', 'Message body', Last one leave as it is
+      swal("Thank You!", "Your Message has been sent. Admin will respond you shortly", "success");
+      },
+      error:function(data){
+        //Error Message == 'Title', 'Message body', Last one leave as it is
+      swal("Oops...", "Something went wrong :(", "error");
+      }
+    });
+    e.preventDefault(); //This is to Avoid Page Refresh and Fire the Event "Click"
+});
 
 // remove item from the cart
+//cart poppup
 $('.remove-from-cart').on('click', function(){
   let index = $(this).attr('data-index')
   //console.log('index', index)
@@ -35,14 +66,22 @@ $('.remove-from-cart').on('click', function(){
     url:'/cart/remove/', //===PHP file name====
     data:{'id':index},
     success:function(response){
-    $('#cartpopper').html(response.data)
+    //$('#cartpopper').html(response.data)
+    $('#item-'+index).remove()
     $('#cart-len').text(response.total_items)
+    $('#cartpopper-total-price').text( 'fcfa ' +response.get_total_price)
+    // if(Number(response.get_total_price)>0){
+    //   $('#cartpopper-total-price').text(response.get_total_price)
+    // }
+    // else{
+    //   $('#cartpopper-total-price-container').remove()
+    // }
    
-    swal("Hey!", "Successfully remove item from cart", "success");
+    swal("Hey!", "Item supprimé avec succès", "success");
     },
     error:function(data){
       //Error Message == 'Title', 'Message body', Last one leave as it is
-    swal("Oops...", "Something went wrong :(", "error");
+    swal("Oops...", "Quelque chose s'est mal passée :(", "error");
     }
   });
 });

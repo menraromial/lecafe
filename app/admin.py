@@ -25,7 +25,7 @@ class CategorieAdmin(admin.ModelAdmin):
 
 @admin.register(Ingredient)
 class IngredientAdmin(admin.ModelAdmin):
-    list_display=['nom', 'get_image','cout']
+    list_display=['nom','cout']
     search_fields=['nom', 'description']
 
 @admin.register(ItemReview)

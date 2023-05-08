@@ -4,6 +4,20 @@
 {% block title %}Commander{% endblock title %}
 {% block content %}
 
+<style>
+    #reader{
+        width: 100%;
+        border-radius: 10px;
+        padding-left: 30px;
+        font-size: 14px;
+        border: 10px solid #d6deec;
+        color: black;
+        outline: none;
+        font-family: 'Epilogue';
+    }
+</style>
+
+
 <section class="banner" style="background-image:url(/static/assets/img/background.png)">
    <div class="container">
       <div class="row align-items-center">
@@ -43,10 +57,10 @@
         <form class="checkout-meta donate-page">
             <div class="row">
                 <div class="col-lg-8">
-                    <h3 class="pb-3">Billing details</h3>
+                    <h3 class="pb-3">Details de la commande</h3>
                         <div class="col-lg-12">
                             <input type="text" class="input-text " name="billing_name" placeholder="Complete Name">
-                            <input type="email" class="input-text " name="billing_email" placeholder="Email address">
+                         <!--  <input type="email" class="input-text " name="billing_email" placeholder="Email address">
                             <select name="billing_country" class="nice-select Advice country_to_state">
                                 <option>Country</option>
                                 <option>Select Topic 1</option>
@@ -94,10 +108,13 @@
                                         Ship to same Address
                                 </label>
                                 </div>
-                            </div>
+                            </div> --> 
                         </div>
                         <div class="woocommerce-additional-fields">
-                            <textarea name="order_comments" class="input-text " placeholder="Order Note"></textarea>
+                            <div style="" id="reader"></div>
+                            
+                            <input type="text" style="margin-top:10px;" id="result" name="table_number" placeholder="Numero de table">
+                            <!--<textarea name="order_comments" class="input-text " placeholder="Order Note"></textarea>-->
                         </div>
                 </div>
                 <div class="col-lg-4">
@@ -111,7 +128,7 @@
                                             <td>
                                                 <span class="woocommerce-Price-amount">
                                                 <bdi>
-                                                    <span class="woocommerce-Price-currencySymbol">$</span>358.00
+                                                    <span class="woocommerce-Price-currencySymbol">fcfa </span>{{cart.get_total_price}}
                                                 </bdi>
                                                 </span>
                                             </td>
@@ -129,7 +146,7 @@
                                             <td>
                                                 <span class="woocommerce-Price-amount">
                                                 <bdi>
-                                                    <span>$</span>358.00
+                                                    <span>fcfa </span>{{cart.get_total_price}}
                                                 </bdi>
                                                 </span>
                                             </td>
@@ -176,3 +193,24 @@
 <!-- jQuery -->
 
 {% endblock content %}
+
+{% block script %}
+<script src="{% static 'assets/js/html5-qrcode.min.js' %}"></script>
+
+<script type="text/javascript">
+    function onScanSuccess(qrCodeMessage) {
+        document.getElementById('result').value = qrCodeMessage;
+    }
+    
+    function onScanError(errorMessage) {
+      //handle scan error
+      swal("Oops...", "Something went wrong :(", "error");
+    }
+    
+    var html5QrcodeScanner = new Html5QrcodeScanner(
+        "reader", { fps: 10, qrbox: 250 });
+    html5QrcodeScanner.render(onScanSuccess, onScanError);
+    
+    </script>
+
+{% endblock script %}

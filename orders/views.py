@@ -29,3 +29,9 @@ def order_create(request):
             'form':form
         }
     return render(request, 'orders/create.html',context)
+
+def cuisinier_page(request):
+    return render(request, 'orders/c_dasboard.html')
+
+def cordon_page(request):
+    return render(request, 'orders/cb_dasboard.html')

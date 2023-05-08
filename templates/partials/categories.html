@@ -13,7 +13,7 @@
           <div class="item">
              <div class="category-choose">
                 <div class="category-choose-img">
-                   <img alt="Category" src="{{category.image.url}}">
+                   <img alt="Category" height="150" width = "259" src="{{category.image.url}}">
                 </div>
                 <a href="{% url 'app:c-details' category.slug %}"><h3>{{category.nom}}</h3></a>
                 <span>{{category.item_set.count}} item dans le menu</span>

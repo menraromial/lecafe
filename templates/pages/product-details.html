@@ -42,11 +42,9 @@
       <div class="row align-items-center">
          <div class="col-xl-6">
             <div class="featured-dishes product-detail-img">
-               <div class="sale">
-                  <h6>Sale</h6>
-               </div>
+               
                <div class="featured-dishes-img">
-                  <img alt="featured-dishes" src="{{item.image.url}}">
+                  <img alt="image/{{item.title}}" height="427" width = "340" src="{{item.image.url}}">
                </div>
             </div>
          </div>
@@ -70,8 +68,8 @@
                   {{item.title}}
                </h3>
                <form class="variations_form" role="form" method="post" id="add_to_cart_form">
-                  <div class="deal-week mb-4 d-flex align-items-center"><h2 class="m-0"><span>Fcfa</span>{{item.price}}</h2><del>$14.85</del></div>
-                  <h5>What’s Included</h5>
+                  <div class="deal-week mb-4 d-flex align-items-center"><h2 class="m-0"><span>Fcfa </span>{{item.price}}</h2></div>
+                  <h5>Ce qui est inclu</h5>
                   <p>{{item.ingredients.all|join:", "}}</p>
                   <div class="d-flex align-items-center mt-4">
                      
@@ -111,7 +109,7 @@
          {% for img in item.item_images.all %}
          <div class="col-lg-4 col-sm-6">
             <div class="product-img">
-               <img alt="product-img" src="{{img.image.url}}"> 
+               <img alt="product-img" height="250" width = "356" src="{{img.image.url}}"> 
             </div>
          </div>
          {% endfor %}
@@ -122,7 +120,7 @@
    <div class="container">
       <div class="benefits">
          <div>
-            <h2 class="pb-3">Benefits</h2>
+            <h2 class="pb-3">Ingredients</h2>
             <ul class="quality-foods">
                {% for ing in item.ingredients.all %}
                   <li><img alt="img" src="{% static 'assets/img/check.png' %}"><h6>{{ing.ingredient.nom}}</h6></li>
