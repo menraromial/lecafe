@@ -4,7 +4,15 @@ from django.shortcuts import get_object_or_404
 
 def home(request):
 
-    return render(request, "pages/index.html")
+    #Boissons
+    #drinks = Item.objects.filter(categorie__nom__icontains="boissons")
+    #Petit dejeuner
+    #breakfasts = Item.o
+    items = Item.objects.filter(available=True)
+    context = {
+        'items':items
+    }
+    return render(request, "pages/index.html", context)
 
 
 def contact(request):

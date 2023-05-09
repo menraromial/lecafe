@@ -27,11 +27,10 @@
              <div class="link-about">
                 <h3>menu</h3>
                 <ul>
-                   <li><i class="fa-solid fa-angle-right"></i><a href="menu-1.html">Steaks</a></li>
-                   <li><i class="fa-solid fa-angle-right"></i><a href="menu-1.html">Burgers</a></li>
-                   <li><i class="fa-solid fa-angle-right"></i><a href="menu-1.html">Coctails</a></li>
-                   <li><i class="fa-solid fa-angle-right"></i><a href="menu-1.html">Bar B Q</a></li>
-                   <li><i class="fa-solid fa-angle-right"></i><a href="menu-1.html">Desserts</a></li>
+                  {% for categorie in menus %}
+                  <li><i class="fa-solid fa-angle-right"></i><a href="{{categorie.get_absolute_url}}">{{categorie.nom}}</a></li>
+                  {% endfor %}
+                   
                 </ul>
              </div>
           </div>
@@ -47,7 +46,7 @@
           </div>
        </div>
        <div class="footer-bootem">
-          <h6><span>© 2023 Foodio</span> | Restaurant and BBQ.</h6>
+          <h6><span>© 2023 Le Café</span> | Restaurant and BBQ.</h6>
           <div class="header-social-media">
              <a href="#">Facebook</a>
              <a href="#">Twitter</a>
