@@ -40,44 +40,63 @@
    </div>
 </section>
 <section class="gap">
-   {% if cart|length >= 1 %}
+   {% if orders|length >= 1 %}
    <div class="container" id="cart-list-table-container">
       <div class="woocommerce-cart-form" id="cart-list-table">
             <div style="overflow-x:auto;overflow-y: hidden;">
               <table class="shop_table table-responsive">
                     <thead>
                         <tr>
-                            <th class="product-name">Product</th>
-                            <th class="product-quantity">quantité</th>
+                            <th class="product-name">Nom</th>
+                            <th class="product-quantity">Numéro de table</th>
+                            <th class="product-quantity">Temps</th>
                             <th class="product-subtotal">Total</th>
-                            <th class="product-subtotal">Supprimer</th>
-                            <th class="product-subtotal">Rafraichir</th>
+                            <th class="product-subtotal">Payé</th>
+                            <th class="product-subtotal">Validé</th>
+                            <th class="product-subtotal">Details</th>
                         </tr>
                     </thead>
                     <tbody>
-                     {% for item in cart %}
+                     {% for order in orders %}
                         <tr>
-                            <td class="product-name">
-                                <img alt="img/{{item.item_title}}" height="50" width = "50" src="{{item.item_image}}">
-                                <div>
-                                    <a href="#">{{item.item_title}}</a>
-                                    
-                                </div>
+                            <td class="product-quantity">
+                                
+                                    <span>{{order.fullname}}</span>
                             </td>
                             <td class="product-quantity">
-                                <input type="number" id="qty-{{item.id}}" class="input-text" value="{{item.quantity}}">
-                                <input type="hidden" id="oqty-{{item.id}}" value="1">
-                            </td>
-                            <td class="product-subtotal">
-                                <span class="woocommerce-Price-amount"><bdi><span class="woocommerce-Price-currencySymbol">fcfa </span><span id="price-{{item.id}}">{{item.total_price}}</span></bdi></span>
-                            </td>
-                            <td class="product-subtotal">
-                              <button id="liveToastBtn" style="border: none;background-color: transparent;"><i class="fa fa-trash" style="color: #f3274c;" ></i>
-                              </button>
+                                <span> {{order.table_number}}</span>
+                            </td>                            <td class="product-quantity">
+                              <span> {{order.created |time }}</span>
                           </td>
+                            <td class="product-subtotal">
+                                <span class="woocommerce-Price-amount"><bdi><span class="woocommerce-Price-currencySymbol">fcfa </span><span>{{order.get_total_cost}}</span></bdi></span>
+                            </td>
+                            <td class="product-subtotal">
+                              
+                                 {% if order.paid  %}
+                                 <i class="fa-solid fa-circle-check" style="color: #1fd143;"></i>
+                                 {% else %}
+                                 <i class="fa-solid fa-circle-xmark" style="color: #ed4902;"></i>
+                                 {% endif %}
+                               
+                          </td>
+                          <td class="product-subtotal" id="valided-{{order.id}}">
+                           
+                              {% if order.valide  %}
+                              <i class="fa-solid fa-circle-check" style="color: #1fd143;"></i>
+                              {% else %}
+                              {% csrf_token %}
+                              <button class="validate-order" data-index="{{order.id}}" style="border: none;background-color: transparent;">
+                              <i class="fa-solid fa-circle-xmark" style="color: #ed4902;"></i>
+                           </button>
+                              {% endif %}
+                              
+                           
+                         </td>
                           <td class="product-subtotal">
-                           {% csrf_token %}
-                           <button data-bs-toggle="modal" data-bs-target="#exampleModal"  style="border: none;background-color: transparent;"><i class="fa fa-refresh" style="color: #8d8284;" aria-hidden="true"></i>
+                           
+                           <button class="open-order-details" data-index="{{order.id}}"   style="border: none;background-color: transparent;">
+                              <i class="fa-solid fa-list" style="color: #bababa;"></i>
                            </button>
                        </td>
                         </tr>
@@ -90,7 +109,7 @@
       </div>
    </div>
    {% else %}
-   <h2>Votre pannier est vide!! </>
+   <h2>Pas de Commande!! </>
    {% endif %}
 </section>
 
@@ -103,39 +122,13 @@
           <h1 class="modal-title fs-5" id="exampleModalLabel">Details de la commande</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" id="modal-body">
            
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                <strong class="d-inline-block mb-2 text-primary">World</strong>
-                <h3 class="mb-0">Featured post</h3>
-                <div class="mb-1 text-muted">Nov 12</div>
-                <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="stretched-link">Continue reading</a>
-                </div>
-                <div class="col-auto d-none d-lg-block">
-                <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-        
-                </div>
-            </div>
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                <strong class="d-inline-block mb-2 text-primary">World</strong>
-                <h3 class="mb-0">Featured post</h3>
-                <div class="mb-1 text-muted">Nov 12</div>
-                <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="stretched-link">Continue reading</a>
-                </div>
-                <div class="col-auto d-none d-lg-block">
-                <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-        
-                </div>
-            </div>
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+          <!--<button type="button" class="btn btn-primary">Save changes</button> -->
         </div>
       </div>
     </div>
@@ -157,16 +150,5 @@
     </div>
   </div>
 
-  <script>
-    var toastTrigger = document.getElementById('liveToastBtn')
-    var toastLiveExample = document.getElementById('liveToast')
-    if (toastTrigger) {
-    toastTrigger.addEventListener('click', function () {
-        var toast = new bootstrap.Toast(toastLiveExample)
-
-        toast.show()
-    })
-}
-  </script>
 
 {% endblock content %}

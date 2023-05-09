@@ -54,12 +54,13 @@
 </section>
    <section class="gap">
       <div class="container">
-        <form class="checkout-meta donate-page">
+        <form method="post" class="checkout-meta donate-page">
+            {% csrf_token %}
             <div class="row">
                 <div class="col-lg-8">
                     <h3 class="pb-3">Details de la commande</h3>
                         <div class="col-lg-12">
-                            <input type="text" class="input-text " name="billing_name" placeholder="Complete Name">
+                            <input type="text" class="input-text " name="fullname" placeholder="Complete Name">
                          <!--  <input type="email" class="input-text " name="billing_email" placeholder="Email address">
                             <select name="billing_country" class="nice-select Advice country_to_state">
                                 <option>Country</option>

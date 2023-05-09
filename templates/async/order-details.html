@@ -1,0 +1,16 @@
+{% for order_item in order.items.all %}
+    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+        <h3 class="mb-0">{{order_item.item.title}}</h3>
+        <div class=" mb-1 text-primary">Total: {{order_item.get_cost}} Fcfa</div>
+        <div class="mb-1 text-muted">Quantité : {{order_item.quantity}}</div>
+        <p class="card-text mb-auto">{{order_item.item.description|truncatewords:14}}.</p>
+        <a href="{{order_item.item.get_absolute_url}}" class="stretched-link">Details</a>
+        </div>
+        <div class="col-auto d-none d-lg-block">
+        <img src="{{order_item.item.image.url}}" alt="image/{{order_item.item.title}}" width="200" height="250" >
+        </div>
+    </div>
+{% empty %}
+<strong class="d-inline-block mb-2 text-primary">Aucun item</strong>
+{% endfor %}

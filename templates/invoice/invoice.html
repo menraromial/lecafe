@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="multikart">
+    <meta name="keywords" content="multikart">
+    <meta name="author" content="multikart">
+    <link rel="shortcut icon" href="{% static 'assets/img/logo-icon.png' %}" type="image/x-icon">
+    <title>Facture | Le Café </title>
+
+    <!--Google font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/fontawesome.min.css' %}">
+
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.min.css' %}">
+
+    <!-- Theme css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/invoice.css' %}">
+
+</head>
+
+<body class="bg-light">
+    <section class="theme-invoice-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-xxl-6 col-xl-8 mx-auto my-3">
+                    <div class="invoice-wrapper">
+                        <div class="invoice-header">
+                            <div class="header-left">
+                                <div class="upper-icon">
+                                    <a href="{% url 'app:home' %}">
+                                    <img src="{% static 'assets/img/logo.png' %}" class="img-fluid" alt="">
+                                </a>
+                                </div>
+
+                                <div class="header-address">
+                                    <div class="address-left">
+                                        <ul>
+                                            <li>2345 Yaoundé ,</li>
+                                            <li>MELEN, ENSPY</li>
+                                            <li>BP, 38740</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="address-right">
+                                        <ul>
+                                            <li class="text-content"><span class="theme-color"> Issue Date :</span> {{order.created}}</li>
+                                            <li class="text-content"><span class="theme-color"> Invoic no :</span>
+                                                {{order.id}}</li>
+                                            <li class="text-content"><span class="theme-color"> Name :</span>
+                                                {{order.fullname}}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="header-right">
+                                <h3>Facture</h3>
+                            </div>
+                        </div>
+                        <div class="invoice-body">
+                            <div class="table-responsive">
+                                <table class="table table-product mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th=>
+                                            <th class="text-start">Item detail</th>
+                                            <th>Qty</th>
+                                            <th>Price</th>
+                                            <th>Amout</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in order.items.all %}
+                                        <tr>
+                                            <td class="text-content"> {{item.id}} </td>
+                                            <td class="text-start">{{item.item.title}}</td>
+                                            <td class="text-content"> {{item.quantity}} </td>
+                                            <td class="text-content">fcfa {{item.price}}</td>
+                                            <td>fcfa {{item.get_cost}}</td>
+                                        </tr>                                       
+                                        {% endfor %}
+
+
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2"></td>
+                                            <td colspan="2">GRAND TOTAL</td>
+                                            <td>fcfa {{order.get_total_cost}}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="invoice-footer">
+                            <div class="button-group">
+                                <ul>
+                                    <li>
+                                        <button class="btn theme-bg-color text-white rounded"
+                                            onclick="window.print();">Export As PDF</button>
+                                    </li>
+                                    <li>
+                                        <button class="btn text-white print-button rounded ms-2"
+                                            onclick="window.print();">Print</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="support-box">
+                                <ul>
+                                    <li>
+                                        <div class="support-detail">
+                                            <div class="support-icon">
+                                                <i class="fa-solid fa-phone"></i>
+                                            </div>
+                                            <div class="support-content">
+                                                <ul>
+                                                    <li>+237 694-086-273</li>
+                                                    <li>+237 694-086-273</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="support-detail">
+                                            <div class="support-icon">
+                                                <i class="fa-solid fa-earth-americas"></i>
+                                            </div>
+                                            <div class="support-content">
+                                                <ul>
+                                                    <li>support@lecafe.com</li>
+                                                    <li>www.lecafe.com</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="support-detail">
+                                            <div class="support-icon">
+                                                <i class="fa-solid fa-location-dot"></i>
+                                            </div>
+                                            <div class="support-content">
+                                                <ul>
+                                                    <li>LeCafe Restaurant</li>
+                                                    <li>Restaurant Cmr-2768283</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>

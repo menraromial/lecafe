@@ -70,12 +70,6 @@ $('.remove-from-cart').on('click', function(){
     $('#item-'+index).remove()
     $('#cart-len').text(response.total_items)
     $('#cartpopper-total-price').text( 'fcfa ' +response.get_total_price)
-    // if(Number(response.get_total_price)>0){
-    //   $('#cartpopper-total-price').text(response.get_total_price)
-    // }
-    // else{
-    //   $('#cartpopper-total-price-container').remove()
-    // }
    
     swal("Hey!", "Item supprimé avec succès", "success");
     },
@@ -155,5 +149,53 @@ $('.update-item-btn').click(function(e){
   });
 
 });
+
+
+//Order details
+
+$('.open-order-details').click(function(){
+  let index = $(this).attr('data-index')
+  let modal = $('#modal-body')
+
+  $.ajax({
+    url:'/orders/details/', 
+    data:{'id':index},
+    success:function(response){
+      $('#exampleModal').modal('show')
+     $('#modal-body').html(response.data)
+    
+    },
+    error:function(data){
+      //Error Message == 'Title', 'Message body', Last one leave as it is
+    swal("Oops...", "Something went wrong :(", "error");
+    }
+  });
+
+});
+
+//Valider une commande
+
+$('.validate-order').click(function(){
+  let index = $(this).attr('data-index')
+
+  $.ajax({
+    url:'/orders/update/', 
+    data:{'id':index},
+    success:function(response){
+      $('#valided-'+index).html('<i class="fa-solid fa-circle-check" style="color: #1fd143;"></i>')
+     //$('#modal-body').html(response.data)
+     var toastLiveExample = document.getElementById('liveToast')
+     var toast = new bootstrap.Toast(toastLiveExample)
+     toast.show()
+    
+    },
+    error:function(data){
+      //Error Message == 'Title', 'Message body', Last one leave as it is
+    swal("Oops...", "Something went wrong :(", "error");
+    }
+  });
+
+});
+
 
 })
