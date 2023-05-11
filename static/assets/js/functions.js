@@ -175,18 +175,30 @@ $('.open-order-details').click(function(){
 
 //Valider une commande
 
-$('.validate-order').click(function(){
-  let index = $(this).attr('data-index')
+$('.validate-order').click(function(e){
+  e.preventDefault()
+  let index = $(this).attr('data-id')
+  let token=$('input[name=csrfmiddlewaretoken]').val()
 
   $.ajax({
     url:'/orders/update/', 
-    data:{'id':index},
+    data:{
+      'index':index,
+      csrfmiddlewaretoken:token
+    },
+    type:'POST',
     success:function(response){
-      $('#valided-'+index).html('<i class="fa-solid fa-circle-check" style="color: #1fd143;"></i>')
-     //$('#modal-body').html(response.data)
-     var toastLiveExample = document.getElementById('liveToast')
-     var toast = new bootstrap.Toast(toastLiveExample)
-     toast.show()
+      if (response.data=='Ok'){
+        $('#valided-'+index).html('<i class="fa-solid fa-circle-check" style="color: #1fd143;"></i>')
+        //$('#modal-body').html(response.data)
+        var toastLiveExample = document.getElementById('liveToast')
+        var toast = new bootstrap.Toast(toastLiveExample)
+        toast.show()
+      }
+      else{
+        swal("Oops...", "Something went wrong :(", "error");
+      }
+      
     
     },
     error:function(data){

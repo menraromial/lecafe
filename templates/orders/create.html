@@ -156,34 +156,20 @@
                                 </table>
                         </div>
                         <div class="checkout-side">
-                            <h3>Payment Method</h3>
+                            <h3>Mode de Payement</h3>
                             <ul>
-                                <li>
-                                    <input type="radio" id="Bank_Payment" name="Bank_Payment" value="Bank_Payment">
-                                    <label for="Bank_Payment">
-                                            Bank Payment
-                                    </label>
-                                </li>
-                                <li>
-                                    <input type="radio" id="Check_Payment" name="Bank_Payment" value="Check_Payment">
-                                    <label for="Check_Payment">
-                                            Check Payment
-                                    </label>
-                                </li>
-                                <li>
-                                    <input type="radio" id="PayPal" name="Bank_Payment" value="Check_Payment">
-                                    <label for="PayPal">
-                                            PayPal
-                                    </label>
-                                </li>
-                                <li>
-                                    <input type="radio" id="Cash on Delivery" name="Bank_Payment" value="Check_Payment">
-                                    <label for="Cash on Delivery">
-                                            Cash on Delivery
-                                    </label>
-                                </li>
+                                {% for paymentM in pm %}
+                                    <li>
+                                        <input type="radio" id="method-{{paymentM.id}}" name="pm_id" value="{{paymentM.id}}">
+                                        <label for="method-{{paymentM.id}}">
+                                                {{paymentM.nom}}
+                                        </label>
+                                    </li>
+                                {% empty %}
+                                <h4> Pas de methode de payement </h4>
+                                {% endfor %}
                             </ul>
-                            <button type="submit" class="button"><span>Place Order</span></button>
+                            <button type="submit" class="button"><span>Commande</span></button>
                         </div>
                     </div>
                 </div>
@@ -205,7 +191,7 @@
     
     function onScanError(errorMessage) {
       //handle scan error
-      swal("Oops...", "Something went wrong :(", "error");
+      console.log(errorMessage);
     }
     
     var html5QrcodeScanner = new Html5QrcodeScanner(

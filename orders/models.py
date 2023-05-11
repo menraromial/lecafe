@@ -4,6 +4,16 @@ from coupons.models import Coupon
 from django.core.validators import MinValueValidator, MaxValueValidator
 from decimal import Decimal
 
+
+class PaymentMethod(models.Model):
+    nom = models.CharField(max_length=100)
+    description = models.TextField()
+    identifiant = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nom
+
+        
 class Order(models.Model):
     fullname = models.CharField(max_length=50)
     #last_name = models.CharField(max_length=50)
@@ -15,6 +25,7 @@ class Order(models.Model):
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
     valide = models.BooleanField(default=False)
+    paymentMethod = models.ForeignKey(PaymentMethod, on_delete=models.SET_NULL, null=True)
     coupon = models.ForeignKey(Coupon, on_delete=models.SET_NULL, related_name='orders',null=True, blank=True)
     discount = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
     class Meta:
@@ -47,3 +58,6 @@ class OrderItem(models.Model):
     
     def get_cost(self):
         return self.price*self.quantity
+
+
+    

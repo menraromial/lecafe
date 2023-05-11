@@ -1,6 +1,7 @@
 
 {% extends 'partials/base.html' %}
 {% load static %}
+{% block title %}Login{% endblock title %}
 {% block content %}
 <section class="banner" style="background-image:url(/static/assets/img/background.png)">
    <div class="container">
@@ -48,13 +49,13 @@
               <div class="remember">
                 <div class="first">
                   <input type="checkbox" name="checkbox" id="checkbox">
-                  <label for="checkbox">Remember me</label>
+                  <!--<label for="checkbox">Remember me</label>-->
                 </div>
                 <div class="second">
-                  <a href="javascript:void(0)">Forget a Password?</a>
+                  <a href="{% url 'authuser:register' %}">Créer un compte</a>
                 </div>
               </div>
-              <button type="submit" class="button">Login</button>
+              <button type="submit" class="button">Connecter</button>
             </form>
           </div>
         </div>

@@ -114,6 +114,12 @@
                                         <button class="btn text-white print-button rounded ms-2"
                                             onclick="window.print();">Print</button>
                                     </li>
+                                    <li>
+                                        <form action="{% url "payment:process" %}" method="post">
+                                            <input type="submit" value="Pay now">
+                                            {% csrf_token %}
+                                        </form>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="support-box">

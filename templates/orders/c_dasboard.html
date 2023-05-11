@@ -86,7 +86,7 @@
                               <i class="fa-solid fa-circle-check" style="color: #1fd143;"></i>
                               {% else %}
                               {% csrf_token %}
-                              <button class="validate-order" data-index="{{order.id}}" style="border: none;background-color: transparent;">
+                              <button class="validate-order" data-id="{{order.id}}" style="border: none;background-color: transparent;">
                               <i class="fa-solid fa-circle-xmark" style="color: #ed4902;"></i>
                            </button>
                               {% endif %}

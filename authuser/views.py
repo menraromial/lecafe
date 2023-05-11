@@ -49,7 +49,7 @@ def login_page(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, "Vous êtes connecté!!")
-                return redirect(request, "app:home")
+                return redirect("app:home")
             else:
                 messages.error(request, "Cet utilisateur n'existe pas, veillez créer un compte!!")
                 #return redirect(request, "authuser:register")

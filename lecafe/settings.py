@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "cart.apps.CartConfig",
     "orders.apps.OrdersConfig",
     "coupons.apps.CouponsConfig",
+    "payment.apps.PaymentConfig",
 ]
 
 MIDDLEWARE = [
@@ -147,3 +148,16 @@ JAZZMIN_SETTINGS = {
     # Logo to use for your site, must be present in static files, used for brand on top left
     "site_logo": "assets/img/logo.png",
 }
+
+#rrppeaysmpzfafpj   PASSWORD
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com' # ex: smtp.gmail.com
+EMAIL_PORT = 587 # ex: 587
+EMAIL_USE_TLS = True # ou False si vous n'utilisez pas TLS
+EMAIL_HOST_USER = 'menraromial@gmail.com'
+EMAIL_HOST_PASSWORD = 'bgwabcnsoxmprcvz'
+
+STRIPE_PUBLISHABLE_KEY='pk_test_51N6VLaI0TlN0GZ9zypE1diZbJwEJuglpIHVKZ53HPLC7aecijz9PqkINr2BbWCyucOgk816zGhZhZM38VwWVoqkK00W1fS3rzQ'
+STRIPE_SECRET_KEY='sk_test_51N6VLaI0TlN0GZ9z1XGAdfjt4LDCBq1pZktJBsGEbLCup2z0km95sVLU01AB7vtn2rTzoqQQCk8DJdDF0FMWySg400Uh9z9JeJ'
+STRIPE_API_VERSION='2022-08-01'

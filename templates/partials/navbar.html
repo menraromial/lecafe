@@ -100,7 +100,16 @@
                         <div class="dropdown">
                           <a href="{% url 'app:about' %}">about</a>
                           <a href="#">our services</a>
-                          <a href="login.html">login</a>
+                          {% if request.user.role == "SERVEUSE" %}
+                          <a href="{% url 'orders:c_dasboard' %}">Tableau de bord</a>
+                          {% endif %}
+                          {% if request.user.role == "CORDON_BLEU" %}
+                          <a href="{% url 'orders:cb_dasboard' %}">Tableau de bord</a>
+                          {% endif %}
+                          {% if request.user.is_superuser %}
+                          <a href="#">Administration</a>
+                          {% endif %}
+                          <a href="#">login</a>
                         </div>
                       </li>
                       <li class="navbar-dropdown">
@@ -148,9 +157,18 @@
             <ul class="sub-menu">
   
               <li><a href="{% url 'app:about' %}">about</a></li>
-              <li><a href="our-services.html">our services</a></li>
-              <li><a href="chef-details.html">chef details</a></li>
-              <li><a href="login.html">login</a></li>
+              <li><a href="#">our services</a></li>
+              <li><a href="#">chef details</a></li>
+              {% if request.user.role == "SERVEUSE" %}
+              <li><a href="{% url 'orders:c_dasboard' %}">Tableau de bord</a></li>
+              {% endif %}
+              {% if request.user.role == "CORDON_BLEU" %}
+              <li><a href="{% url 'orders:cb_dasboard' %}">Tableau de bord</a></li>
+              {% endif %}
+              {% if request.user.is_superuser %}
+              <li><a href="#">Administration</a></li>
+              {% endif %}
+              <li><a href="#">login</a></li>
             </ul>
   
             </li>
