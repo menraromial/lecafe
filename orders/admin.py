@@ -3,8 +3,16 @@ from .models import Order, OrderItem, PaymentMethod
 import csv
 import datetime
 from django.http import HttpResponse
+from django.utils.safestring import mark_safe
 
+def order_payment(obj):
+    url = obj.get_stripe_url()
+    if obj.stripe_id:
+        html = f'<a href="{url}" target="_blank">{obj.stripe_id}</a>'
+        return mark_safe(html)
+    return ''
 
+order_payment.short_description = 'Stripe payement'
 
 def export_to_csv(modeladmin, request, queryset):
     opts = modeladmin.model._meta
@@ -34,7 +42,7 @@ class OrderItemInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'fullname','table_number','get_total_cost', 'paid','valide',
+    list_display = ['id', 'fullname','table_number','get_total_cost', 'paid',order_payment,'valide',
     'created', 'updated']
     list_filter = ['paid', 'created', 'updated']
     inlines = [OrderItemInline]

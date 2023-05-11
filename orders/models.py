@@ -3,6 +3,7 @@ from app.models import Item
 from coupons.models import Coupon
 from django.core.validators import MinValueValidator, MaxValueValidator
 from decimal import Decimal
+from django.conf import settings
 
 
 class PaymentMethod(models.Model):
@@ -26,6 +27,7 @@ class Order(models.Model):
     paid = models.BooleanField(default=False)
     valide = models.BooleanField(default=False)
     paymentMethod = models.ForeignKey(PaymentMethod, on_delete=models.SET_NULL, null=True)
+    stripe_id = models.CharField(max_length=250, blank=True)
     coupon = models.ForeignKey(Coupon, on_delete=models.SET_NULL, related_name='orders',null=True, blank=True)
     discount = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
     class Meta:
@@ -48,6 +50,17 @@ class Order(models.Model):
             return total_cost*(self.discount/Decimal(100))
         return Decimal(0)
 
+    def get_stripe_url(self):
+        if not self.stripe_id:
+            # no payment associated
+            return ''
+        if '_test_' in settings.STRIPE_SECRET_KEY:
+            # Stripe path for test payments
+            path = '/test/'
+        else:
+            # Stripe path for real payments
+            path = '/'
+        return f'https://dashboard.stripe.com{path}payments/{self.stripe_id}'
 class OrderItem(models.Model):
     order = models.ForeignKey(Order,related_name='items',on_delete=models.CASCADE)
     item = models.ForeignKey(Item,related_name='order_items',on_delete=models.CASCADE)
