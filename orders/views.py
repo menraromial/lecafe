@@ -8,6 +8,11 @@ from django.utils import timezone
 from datetime import date, datetime
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+from django.contrib.admin.views.decorators import staff_member_required
+from django.conf import settings
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 
 #import datetime
 
@@ -56,6 +61,11 @@ def order_create(request):
         }
     return render(request, 'orders/create.html',context)
 
+@staff_member_required
+def admin_order_detail(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    return render(request,'admin/orders/order/detail.html',{'order': order})
+
 def cuisinier_page(request):
     # Récupérer la date d'aujourd'hui
     today = date.today()
@@ -92,3 +102,11 @@ def update_order(request):
         return JsonResponse({'data':'Ok'})
 
     return JsonResponse({'data':'error'})
+
+@staff_member_required
+def admin_order_pdf(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    #template = get_template('admin/orders/order/pdf.html')
+    context={'order':order}
+
+    return render(request,'admin/orders/order/pdf.html', context )

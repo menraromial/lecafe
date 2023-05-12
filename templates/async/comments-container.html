@@ -1,0 +1,24 @@
+{% load static %}
+<div id="comment-container">
+    {% for review in item.item_reviews.all %}
+    <div class="single-comment">
+     <img alt="img" src="{% static 'assets/img/avatar.png' %}" height="160" width="160">
+     <div class="ps-md-4">
+       <div class="d-flex align-items-center">
+         <h4>{{review.fullname}}</h4>
+         <span>{{review.date}}</span>
+       </div>
+         <p>{{review.review}}</p>
+     </div> 
+     <ul class="star">
+        {% with ''|center:review.rating as range %}
+        {% for _ in range %}
+           <li><i class="fa-solid fa-star"></i></li>
+        {% endfor %}
+        {% endwith %}
+   </ul>
+   </div>
+    {% empty %}
+    <h3> Pas de Commentaires </h3>
+    {% endfor %}
+  </div>

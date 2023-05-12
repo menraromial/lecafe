@@ -3,7 +3,7 @@ from django.db.models import Count
 
 def category(request):
     categories = Categorie.objects.all()
-    menus = Categorie.objects.annotate(nb_produits=Count('item')).filter(nb_produits__gt=0).order_by('-nb_produits')
+    menus = Categorie.objects.annotate(nb_produits=Count('items')).filter(nb_produits__gt=0).order_by('-nb_produits')
     #produits = catégorie.produit_set.all()
 
     return {'categories':categories, 'menus':menus }

@@ -6,10 +6,10 @@
           <h2>Choisir une Categorie</h2>
           <div class="line"></div>
        </div>
+       {% if menus %}
        <div class="choosecategory owl-carousel owl-theme">
-
-          {% if categories %}
-          {% for category in categories %}
+          
+          {% for category in menus %}
           <div class="item">
              <div class="category-choose">
                 <div class="category-choose-img">
@@ -21,9 +21,8 @@
           </div>
           {% endfor %}
           {% else %}
-          <h2>Rien dans le menu</h2>
-          {% endif %}
-
        </div>
+       <h2>Rien dans le menu</h2>
+      {% endif %}
     </div>
  </section>

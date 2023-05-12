@@ -107,9 +107,9 @@
                           <a href="{% url 'orders:cb_dasboard' %}">Tableau de bord</a>
                           {% endif %}
                           {% if request.user.is_superuser %}
-                          <a href="#">Administration</a>
+                          <a href="{% url 'admin:index' %}">Administration</a>
                           {% endif %}
-                          <a href="#">login</a>
+                          <a href="{% url 'authuser:login' %}">login</a>
                         </div>
                       </li>
                       <li class="navbar-dropdown">
@@ -166,9 +166,9 @@
               <li><a href="{% url 'orders:cb_dasboard' %}">Tableau de bord</a></li>
               {% endif %}
               {% if request.user.is_superuser %}
-              <li><a href="#">Administration</a></li>
+              <li><a href="{% url 'admin:index' %}">Administration</a></li>
               {% endif %}
-              <li><a href="#">login</a></li>
+              <li><a href="{% url 'authuser:login' %}">login</a></li>
             </ul>
   
             </li>

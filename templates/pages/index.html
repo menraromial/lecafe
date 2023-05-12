@@ -201,7 +201,7 @@
                         <div class="discover">
                            <h4>{{categorie.nom}}</h4>
                            <ul>
-                              {% for item in categorie.item_set.all  %}
+                              {% for item in categorie.items.all  %}
                               <li>
                                  <div>
                                     <h6><a href="{{item.get_absolute_url}}">{{item.title}}</a></h6>
@@ -227,7 +227,7 @@
                         <div class="discover">
                            <h4>{{categorie.nom}}</h4>
                            <ul>
-                              {% for item in categorie.item_set.all  %}
+                              {% for item in categorie.items.all  %}
                               <li>
                                  <div>
                                     <h6><a href="{{item.get_absolute_url}}">{{item.title}}</a></h6>

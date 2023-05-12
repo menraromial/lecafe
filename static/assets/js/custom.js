@@ -25,6 +25,9 @@
 -----------------------------------------------------------------------------------*/
 
 jQuery(document).ready(function($){
+
+  
+  
     if ( $.isFunction($.fn.owlCarousel) ) {
 
 /* 1. slider-home-1 */

@@ -209,5 +209,36 @@ $('.validate-order').click(function(e){
 
 });
 
+//Add review
+$('.add-review-btn').click(function(e){
+  e.preventDefault()
+  let index = $(this).attr('data-index')
+  let token=$('input[name=csrfmiddlewaretoken]').val()
+  let fullname = $('input[name=fullname]').val()
+  let rating=$('#rating').val()
+  let review = $('#review').val()
+  //console.log('click', review, fullname)
+
+  $.ajax({
+    url:'/review/add/', 
+    data:{
+      'item_id':index,
+      'fullname':fullname,
+      'rating':rating,
+      'review':review,
+      csrfmiddlewaretoken:token
+    },
+    type:'POST',
+    success:function(response){
+      $('#comment-container').html(response.data)
+    },
+    error:function(data){
+      //Error Message == 'Title', 'Message body', Last one leave as it is
+    swal("Oops...", "Something went wrong :(", "error");
+    }
+  });
+
+});
+
 
 })

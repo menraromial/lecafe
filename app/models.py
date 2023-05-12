@@ -65,7 +65,7 @@ class Item(models.Model):
     price = models.DecimalField(max_digits=10,decimal_places=2)
     #ancien_cout = models.DecimalField(max_digits=10,decimal_places=2)
     description = models.TextField(blank=True, null=True)
-    categorie = models.ForeignKey(Categorie, on_delete=models.SET_NULL, null=True)
+    categories = models.ManyToManyField(Categorie, related_name="items")
     image = models.ImageField(upload_to=get_image_path, default="/static/assets/img/benefit.png")
     slug = models.SlugField(unique=True,null=False)
     available = models.BooleanField(default=True)
@@ -110,8 +110,9 @@ class ItemIngredients(models.Model):
 
 
 class ItemReview(models.Model):
-    item=models.ForeignKey(Item, on_delete=models.SET_NULL, null=True, related_name='item_review')
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    item=models.ForeignKey(Item, on_delete=models.SET_NULL, null=True, related_name='item_reviews')
+    #user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    fullname=models.CharField(max_length=100)
     review = models.TextField()
     rating = models.SmallIntegerField(choices=RATING, default=None)
     date = models.DateTimeField(auto_now_add=True)
@@ -120,7 +121,7 @@ class ItemReview(models.Model):
         verbose_name_plural="Item Reviews"
     
     def __str__(self):
-        return self.item.nom
+        return self.item.title
     
     def get_ratin(self):
         return self.rating

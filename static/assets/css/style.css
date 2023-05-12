@@ -2875,7 +2875,7 @@ form.checkout-meta input {
 form.checkout-meta input::placeholder{
     color: black;
 }
-form.checkout-meta.donate-page .nice-select.Advice {
+form.checkout-meta.donate-page .nice-select.Advice, .nice-select {
     margin-bottom: 15px;
     width: 100%;
     height: 60px;
@@ -3219,7 +3219,7 @@ ul.product_meta li a {
 .single-comment .star li{
     line-height: 0;
 }
-form.add-review.leave-comment button.button {
+div.add-review.leave-comment button.button {
     width: auto;
 }
 /* our servises pag */

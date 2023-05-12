@@ -11,9 +11,9 @@ class ItemIngredientsAdmin(admin.TabularInline):
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
     inlines = [ItemImagesAdmin, ItemIngredientsAdmin]
-    list_display=['title','get_image','price','categorie','available', 'created', 'updated']
+    list_display=['title','get_image','price','available', 'created', 'updated']
     search_fields=['nom', 'description']
-    list_filter=['categorie', 'available', 'created', 'updated']
+    list_filter=['categories', 'available', 'created', 'updated']
     list_editable = ['price', 'available']
     prepopulated_fields={'slug':['title']}
     #filter(function, iterable)
@@ -30,7 +30,7 @@ class IngredientAdmin(admin.ModelAdmin):
 
 @admin.register(ItemReview)
 class ItemReviewAdmin(admin.ModelAdmin):
-    list_display=['user', 'rating', 'date']
+    list_display=['fullname', 'rating', 'date']
 '''
 @admin.register(CartOrder)
 class CartOrderAdmin(admin.ModelAdmin):
