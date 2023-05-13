@@ -49,7 +49,7 @@ def order_create(request):
             cart.clear()
             # set the order in the session
             request.session['order_id'] = order.id
-            envoyer_mail_html(['menraromial@gmail.com'], 'Order success', {'order':order}, 'email/order-success.html')
+            #envoyer_mail_html(['menraromial@gmail.com'], 'Order success', {'order':order}, 'email/order-success.html')
         return render(request,'invoice/invoice.html', {'order':order})
     
     else:

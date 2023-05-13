@@ -86,14 +86,20 @@
             </div>
          <div class="row mt-5" id="total_price">
             <div class="col-lg-4">
+               {% if request.user.is_authenticated %}
                <div class="coupon-area">
-                     <h3>Apply Coupon</h3>
-                     <div class="coupon">
-                        <input type="text" name="coupon_code" class="input-text" placeholder="Coupon Code">
-                        <button type="submit" id="tes-click" name="apply_coupon"><span>Apply coupon</span>
-                        </button>
-                     </div>
-               </div>
+                  <h3>Appliquer Coupon</h3>
+                  <div class="coupon">
+                     {% csrf_token %}
+                     <input type="text" name="coupon_code" class="input-text" placeholder="Coupon Code">
+                     <button type="submit" id="apply-coupon-btn" name="apply_coupon"><span>Appliquer Coupon</span>
+                     </button>
+                  </div>
+            </div>
+               {% else %}
+               <h4>Vous devez avoir un compte pour beneficier d'une reduction sur nos prix </h4>
+               {% endif %}
+               
             </div>
             <div class="col-lg-8">
                <div class="cart_totals">
@@ -101,30 +107,34 @@
                      <div class="shop_table-boder">
                         <table class="shop_table_responsive">
                            <tbody>
+                              {% if cart.coupon %}
                               <tr class="cart-subtotal">
-                                    <th>Sub total:</th>
-                                    <td>
-                                       <span class="woocommerce-Price-amount">
-                                                  <bdi>
-                                          <span class="woocommerce-Price-currencySymbol total-price">fcfa </span>{{cart.get_total_price}}
-                                       </bdi>
-                                       </span>
-                                    </td>
-                              </tr>
-                              <tr class="Shipping">
-                                    <th>Shipping:</th>
-                                    <td>
-                                       <span class="woocommerce-Price-amount amount">
-                                                      free
-                                       </span>
-                                    </td>
-                               </tr>
+                                 <th>Sous total:</th>
+                                 <td>
+                                    <span class="woocommerce-Price-amount">
+                                               <bdi>
+                                       <span class="woocommerce-Price-currencySymbol total-price">fcfa </span>{{ cart.get_total_price|floatformat:2 }}
+                                    </bdi>
+                                    </span>
+                                 </td>
+                           </tr>
+                           <tr class="Shipping">
+                                 <th>"{{ cart.coupon.code }}" coupon
+                                    ({{ cart.coupon.discount }}% off)</th>
+                                 <td>
+                                    <span class="woocommerce-Price-amount amount">
+                                       fcfa {{ cart.get_discount|floatformat:2 }}
+                                    </span>
+                                 </td>
+                            </tr>
+                              {% endif %}
+
                                <tr class="Total">
                                      <th>Total:</th>
                                      <td>
                                         <span class="woocommerce-Price-amount">
                                         <bdi>
-                                           <span class="total-price">fcfa </span>{{cart.get_total_price}}
+                                           <span class="total-price">fcfa </span>{{ cart.get_total_price_after_discount|floatformat:2 }}
                                         </bdi>
                                         </span>
                                      </td>
@@ -133,8 +143,8 @@
                         </table>
                      </div>
                       <div class="wc-proceed-to-checkout">
-                        <a href="#" class="button">
-                           <span>Proceed to checkout</span>
+                        <a href="{% url 'orders:order_create' %}" class="button">
+                           <span>Passer une Commande</span>
                            </a>
                   </div>
                      </div>

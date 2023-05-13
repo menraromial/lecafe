@@ -241,4 +241,41 @@ $('.add-review-btn').click(function(e){
 });
 
 
+
+// Apply Coupon
+$('#apply-coupon-btn').click(function(e){
+  e.preventDefault()
+
+  let token=$('input[name=csrfmiddlewaretoken]').val()
+  let code=$('input[name=coupon_code]').val()
+  //console.log('qty', qty, 'oqty',oqty, 'index', index, token)
+
+  $.ajax({
+    url:'/coupons/apply/', //===PHP file name====
+    data:{
+      'code':code,
+      csrfmiddlewaretoken:token
+    },
+    type:'POST',
+    success:function(response){
+    //$('#cartpopper').html(response.data)
+    //$('#cart-len').text(response.total_items)
+    if (response.data !== null){
+    if(response.data=='exist'){swal("Hey!", "Vous avez déjà appliquer ce coupon", "info");}
+    else if(response.data == 'DoesNotExist'){swal("Oops...", "Code incorrect", "error")}
+    else{
+      $('#total_price').html(response.data)
+      swal("Hey!", "Coupon appliqué", "success")
+    }
+    }
+
+    },
+    error:function(data){
+      //Error Message == 'Title', 'Message body', Last one leave as it is
+    swal("Oops...", "Something went wrong :(", "error");
+    }
+  });
+
+});
+
 })

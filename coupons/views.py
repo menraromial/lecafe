@@ -5,6 +5,7 @@ from .models import Coupon
 from .forms import CouponApplyForm
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+from cart.cart import Cart
 
 @require_POST
 def coupon_apply(request):
@@ -21,14 +22,13 @@ def coupon_apply(request):
                 active=True
             )
             
-            if request.session['coupon_id']:
-                context="exist"
-            else:
-                request.session['coupon_id'] = coupon.id
-                context="apply"
+            
+            request.session['coupon_id'] = coupon.id
+            cart = Cart(request)
+            context=render_to_string('async/total_price.html',{'cart':cart})
         except Coupon.DoesNotExist:
             request.session['coupon_id'] = None
             context="DoesNotExist"
-    context="CodeDoesNotExist"
+    #context="CodeDoesNotExist"
 
     return JsonResponse({'data':context}) #return a json
