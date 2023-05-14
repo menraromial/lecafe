@@ -10,11 +10,11 @@
           <div class="col-lg-7">
              <div class="title-area-data">
                 <h2>Menu details</h2>
-                <p>A magical combination that sent aromas to the taste buds</p>
+                <p>Une combinaison magique qui envoie des arômes aux papilles</p>
              </div>
              <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                  <a href="{% url 'app:home' %}"><i class="fa-solid fa-house"></i> Acceuil</a>
+                  <a href="{% url 'app:home' %}"><i class="fa-solid fa-house"></i> Accueil</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Menu details</li>
              </ol>
@@ -43,8 +43,8 @@
  <section class="gap complimentary" style="background-color:#f5f8fd;">
     <div class="container">
        <div class="heading-two">
-          <h2>A Complimentary Cocktail, Coffee, Ice-Tea For You.</h2>
-          <p>Enjoy a Cosmopolitian or a non-alcoholic espresso martini.</p>
+          <h2>{{categorie.nom}}</h2>
+          <p>{{categorie.description|truncatewords:9}}</p>
        </div>
        <div class="row">
          {% for item in categorie.items.all %}
@@ -77,7 +77,7 @@
          {% endfor %}
 
        </div>
-       <h5>Booking Calling 24/7:  <a href="callto:+441298123987">+44 1298 123 987</a></h5>
+       <h5>Appel de réservation 24/7:  <a href="callto:+441298123987">+237 694 08 62 73</a></h5>
     </div>
  </section>
 

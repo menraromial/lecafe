@@ -5,7 +5,7 @@ jQuery(document).ready(function(){
 
 //Add to cart functionality
 //From product details pages
-jQuery('#add_to_cart_form').on('submit',function(e) {  //Don't foget to change the id form
+jQuery('#add_to_cart_form').on('submit',function(e) {  
     jQuery.ajax({
         url:'/cart/add/', 
         data:jQuery(this).serialize(),
@@ -15,7 +15,7 @@ jQuery('#add_to_cart_form').on('submit',function(e) {  //Don't foget to change t
         $('#cart-len').text(response.total_items)
         //console.log('total_item',response.total_items)
           //Success Message == 'Title', 'Message body', Last one leave as it is
-        swal("Thank You!", "Your Message has been sent. Admin will respond you shortly", "success");
+        swal("Merci!", "Item ajouté au panier", "success");
         },
         error:function(data){
           //Error Message == 'Title', 'Message body', Last one leave as it is
@@ -46,7 +46,7 @@ jQuery('.add_to_cart').on('click',function(e) {
       $('#cart-len').text(response.total_items)
       //console.log('total_item',response.total_items)
         //Success Message == 'Title', 'Message body', Last one leave as it is
-      swal("Thank You!", "Your Message has been sent. Admin will respond you shortly", "success");
+      swal("Merci!", "Item ajouté au panier", "success");
       },
       error:function(data){
         //Error Message == 'Title', 'Message body', Last one leave as it is
@@ -63,7 +63,7 @@ $('.remove-from-cart').on('click', function(){
   //console.log('index', index)
 
   $.ajax({
-    url:'/cart/remove/', //===PHP file name====
+    url:'/cart/remove/', 
     data:{'id':index},
     success:function(response){
     //$('#cartpopper').html(response.data)
@@ -89,7 +89,7 @@ $('.delete-item-btn').click(function(){
   let this_val = $(this)
 
   $.ajax({
-    url:'/cart/remove/', //===PHP file name====
+    url:'/cart/remove/', 
     data:{'id':index},
     success:function(response){
     $('#cartpopper').html(response.cart_list)
@@ -98,7 +98,7 @@ $('.delete-item-btn').click(function(){
     $('#total_price').html(response.total_price)
     //console.log(this_val )
     this_val.closest('tr').remove();
-    swal("Hey!", "Successfully remove item from cart", "success");
+    swal("Hey!", "Item supprimé du panier", "success");
 
     },
     error:function(data){
@@ -123,7 +123,7 @@ $('.update-item-btn').click(function(e){
   //console.log('qty', qty, 'oqty',oqty, 'index', index, token)
 
   $.ajax({
-    url:'/cart/add/', //===PHP file name====
+    url:'/cart/add/', 
     data:{
       'item-id':index,
       'qty':qty,
@@ -140,7 +140,7 @@ $('.update-item-btn').click(function(e){
     price.text(response.item_t_price)
     //$('#total-price-2').text(response.total_price)
    
-    swal("Hey!", "Successfully remove item from cart", "success");
+    swal("Hey!", "Quantité mise à jour", "success");
     },
     error:function(data){
       //Error Message == 'Title', 'Message body', Last one leave as it is
@@ -276,6 +276,25 @@ $('#apply-coupon-btn').click(function(e){
     }
   });
 
+});
+
+//Contact Us
+jQuery('#contact-form').on('submit',function(e) {  
+  jQuery.ajax({
+      url:'/contacts/send/', 
+      data:jQuery(this).serialize(),
+      type:'POST',
+      success:function(data){
+      
+        //Success Message == 'Title', 'Message body', Last one leave as it is
+      swal("Hey!", "Message envoyé avec succès", "success");
+      },
+      error:function(data){
+        //Error Message == 'Title', 'Message body', Last one leave as it is
+      swal("Oops...", "Something went wrong :(", "error");
+      }
+    });
+    e.preventDefault(); //This is to Avoid Page Refresh and Fire the Event "Click"
 });
 
 })

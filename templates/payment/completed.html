@@ -1,6 +1,15 @@
 {% extends "partials/base.html" %}
 {% block title %}Payment successful{% endblock %}
 {% block content %}
-<h1>Your payment was successful</h1>
-<p>Your payment has been processed successfully.</p>
+<div class="link-about" style="display: flex;justify-content: center;align-items: center;flex-direction:column;min-height:500px">
+<h1>Votre paiement a réussi</h1>
+
+    <form class="footer-form" style="margin-bottom:30px; margin-top:30px;">
+        {% if session_order_id %}
+        <a class="button" href="{% url 'orders:admin_order_pdf' session_order_id %}">Télécharger facture</a>
+        {% endif %}
+       
+    </form>
+ </div>
+ <div class="link-about" style="margin-right:auto; margin-left:auto;">
 {% endblock %}

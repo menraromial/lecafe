@@ -10,11 +10,11 @@
           <div class="col-lg-7">
              <div class="title-area-data">
                 <h2>Menu</h2>
-                <p>A magical combination that sent aromas to the taste buds</p>
+                <p>Une combinaison magique qui envoie des arômes aux papilles</p>
              </div>
              <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                  <a href="{% url 'app:home' %}"><i class="fa-solid fa-house"></i> Acceuil</a>
+                  <a href="{% url 'app:home' %}"><i class="fa-solid fa-house"></i> Accueil</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Menu</li>
              </ol>
@@ -66,12 +66,12 @@
                 {% csrf_token %}
                 <input type="hidden" name="qty" value="1" id="qty-{{item.id}}" >
                 <input type="hidden" name="oqty" value="0" id="oqty-{{item.id}}" >
-                <button class="add_to_cart" data-index="{{item.id}}">
-                <i><svg enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g><path d="m452 120h-60.946c-7.945-67.478-65.477-120-135.054-120s-127.109 52.522-135.054 120h-60.946c-11.046 0-20 8.954-20 20v352c0 11.046 8.954 20 20 20h392c11.046 0 20-8.954 20-20v-352c0-11.046-8.954-20-20-20zm-196-80c47.484 0 87.019 34.655 94.659 80h-189.318c7.64-45.345 47.175-80 94.659-80zm176 432h-352v-312h40v60c0 11.046 8.954 20 20 20s20-8.954 20-20v-60h192v60c0 11.046 8.954 20 20 20s20-8.954 20-20v-60h40z"></path></g></svg></i></button>
+                <a class="add_to_cart" data-index="{{item.id}}">
+                <i><svg enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g><path d="m452 120h-60.946c-7.945-67.478-65.477-120-135.054-120s-127.109 52.522-135.054 120h-60.946c-11.046 0-20 8.954-20 20v352c0 11.046 8.954 20 20 20h392c11.046 0 20-8.954 20-20v-352c0-11.046-8.954-20-20-20zm-196-80c47.484 0 87.019 34.655 94.659 80h-189.318c7.64-45.345 47.175-80 94.659-80zm176 432h-352v-312h40v60c0 11.046 8.954 20 20 20s20-8.954 20-20v-60h192v60c0 11.046 8.954 20 20 20s20-8.954 20-20v-60h40z"></path></g></svg></i></a>
              </div>
           </div>
           {% endfor %}
-
+         <!--
           <ul class="pagination m-auto mt-5">
                    <li class="prev"><a href="#"><i class="fa-solid fa-angles-left"></i></a></li>
                    <li><a href="#">1</a></li>
@@ -80,7 +80,8 @@
                    <li><a href="#">...</a></li>
                    <li><a href="#">18</a></li>
                    <li class="next"><a href="#"><i class="fa-solid fa-angles-right"></i></a></li>
-                </ul>
+            </ul>
+            -->
        </div>
        {% else %}
        <h2>Nous n'avons pas encore de menu</h2>

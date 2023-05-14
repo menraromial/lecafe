@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import OrderItem, Order,PaymentMethod
 from .forms import OrderCreateForm
 from cart.cart import Cart
@@ -12,7 +12,8 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.conf import settings
 from django.http import HttpResponse
 from django.template.loader import get_template
-from xhtml2pdf import pisa
+from django.db.models import Q
+from django.urls import reverse 
 
 #import datetime
 
@@ -50,7 +51,8 @@ def order_create(request):
             # set the order in the session
             request.session['order_id'] = order.id
             #envoyer_mail_html(['menraromial@gmail.com'], 'Order success', {'order':order}, 'email/order-success.html')
-        return render(request,'invoice/invoice.html', {'order':order})
+            return redirect(reverse('payment:process'))
+        #return render(request,'invoice/invoice.html', {'order':order})
     
     else:
         form=OrderCreateForm()
@@ -71,7 +73,7 @@ def cuisinier_page(request):
     today = date.today()
 
     # Récupérer toutes les commandes créées aujourd'hui
-    orders_today = Order.objects.filter(created__gte=timezone.make_aware(datetime.combine(today, datetime.min.time())))
+    orders_today = Order.objects.filter(Q(created__gte=timezone.make_aware(datetime.combine(today, datetime.min.time()))) & Q(valide=False))
 
     return render(request, 'orders/c_dasboard.html', {'orders':orders_today})
 
@@ -103,7 +105,7 @@ def update_order(request):
 
     return JsonResponse({'data':'error'})
 
-@staff_member_required
+#@staff_member_required
 def admin_order_pdf(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     #template = get_template('admin/orders/order/pdf.html')

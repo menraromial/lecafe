@@ -9,6 +9,6 @@ urlpatterns = [
     path('admin/order/<int:order_id>/pdf/',views.admin_order_pdf,name='admin_order_pdf'),
     path('details/', views.order_details, name="order_details"),
     path('update/', views.update_order, name='update_order'),
-    path('cuisinier/dashboard', views.cuisinier_page, name="c_dasboard"),
+    path('serveur/dashboard', views.cuisinier_page, name="c_dasboard"),
     path('cordon-bleu/dashboard', views.cordon_page, name="cb_dasboard")
 ]

@@ -24,8 +24,15 @@
                    
                   {% if request.user.is_authenticated %}
                     <a href="#">Bienvenue {{user.username}}</a>
-                    <a href=" {% url 'orders:c_dasboard' %} ">Dashboard c</a>
-                    <a href=" {% url 'orders:cb_dasboard' %} ">Dashboard cb</a>
+                    {% if request.user.role == "SERVEUSE" %}
+                    <a href="{% url 'orders:c_dasboard' %}">Tableau de bord</a>
+                    {% endif %}
+                    {% if request.user.role == "CORDON_BLEU" %}
+                    <a href="{% url 'orders:cb_dasboard' %}">Tableau de bord</a>
+                    {% endif %}
+                    {% if request.user.is_superuser %}
+                    <a href="{% url 'admin:index' %}">Administration</a>
+                    {% endif %}
                   {% else %}
                     <a href="#">Vous n'êtes pas connecté</a>
                   {% endif %}   
@@ -57,7 +64,7 @@
                        </a>
                     </div>
                     <div class="d-flex cart-checkout">
-                      <a href="{% url 'orders:order_create' %}">
+                      <a href="{% url 'cart:cart_detail' %}">
                           <i>
                               <svg enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g>
                               <path d="m452 120h-60.946c-7.945-67.478-65.477-120-135.054-120s-127.109 52.522-135.054 120h-60.946c-11.046 0-20 8.954-20 20v352c0 11.046 8.954 20 20 20h392c11.046 0 20-8.954 20-20v-352c0-11.046-8.954-20-20-20zm-196-80c47.484 0 87.019 34.655 94.659 80h-189.318c7.64-45.345 47.175-80 94.659-80zm176 432h-352v-312h40v60c0 11.046 8.954 20 20 20s20-8.954 20-20v-60h192v60c0 11.046 8.954 20 20 20s20-8.954 20-20v-60h40z"></path></g></svg>
@@ -74,7 +81,7 @@
                  <nav class="navbar">
                     <ul class="navbar-links">
                       <li class="navbar-dropdown">
-                        <a href="{% url 'app:home' %}">Acceuil</a>
+                        <a href="{% url 'app:home' %}">Accueil</a>
                       </li>
                       <li class="navbar-dropdown">
                         <a href="{% url 'app:menu' %}">Menus</a>
@@ -99,7 +106,7 @@
                         <a href="#">Pages</a>
                         <div class="dropdown">
                           <a href="{% url 'app:about' %}">about</a>
-                          <a href="#">our services</a>
+                          
                           {% if request.user.role == "SERVEUSE" %}
                           <a href="{% url 'orders:c_dasboard' %}">Tableau de bord</a>
                           {% endif %}
@@ -109,7 +116,8 @@
                           {% if request.user.is_superuser %}
                           <a href="{% url 'admin:index' %}">Administration</a>
                           {% endif %}
-                          <a href="{% url 'authuser:login' %}">login</a>
+                          <a href="{% url 'authuser:login' %}">connexion</a>
+                          
                         </div>
                       </li>
                       <li class="navbar-dropdown">
@@ -133,7 +141,7 @@
                   {% include 'partials/cartpopper.html' %}
   
                 </div>
-                       <a href="contact.html" class="button">Reserve a Table</a>
+                       <a href="{% url 'app:contact' %}" class="button">Reserver une Table</a>
                  </div>
               </div>
            </div>
@@ -150,15 +158,14 @@
         </div>
           <ul>
   
-            <li><a href="{% url 'app:home' %} ">Acceuil</a></li>
+            <li><a href="{% url 'app:home' %} ">Accueil</a></li>
             <li><a href="{% url 'app:menu' %}">Menus</a></li>
             <li><a href="#">Actualités</a></li>
             <li class="menu-item-has-children"><a href="JavaScript:void(0)">Pages</a>
             <ul class="sub-menu">
   
               <li><a href="{% url 'app:about' %}">about</a></li>
-              <li><a href="#">our services</a></li>
-              <li><a href="#">chef details</a></li>
+              
               {% if request.user.role == "SERVEUSE" %}
               <li><a href="{% url 'orders:c_dasboard' %}">Tableau de bord</a></li>
               {% endif %}
@@ -168,7 +175,13 @@
               {% if request.user.is_superuser %}
               <li><a href="{% url 'admin:index' %}">Administration</a></li>
               {% endif %}
-              <li><a href="{% url 'authuser:login' %}">login</a></li>
+              {% if request.user.is_authenticated %}
+                  <li><a href="{% url 'authuser:logout' %}">Se deconnecter</a></li>
+              {% else %}
+                    <li><a href="{% url 'authuser:login' %}">Se connecter </a>
+                    <a href="{% url 'authuser:register' %}">/ Créer un compte</a> </li>
+              {% endif %}
+              
             </ul>
   
             </li>
@@ -180,3 +193,11 @@
             <a href="JavaScript:void(0)" id="res-cross"></a>
     </div>
   </header>
+
+  {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="alert  alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}

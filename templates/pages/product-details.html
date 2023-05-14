@@ -25,14 +25,14 @@
       <div class="row align-items-center">
          <div class="col-lg-7">
             <div class="title-area-data">
-               <h2>Product Details</h2>
-               <p>A magical combination that sent aromas to the taste buds</p>
+               <h2>Détails de la nourriture</h2>
+               <p>Une combinaison magique qui envoie des arômes aux papilles</p>
             </div>
             <ol class="breadcrumb">
                <li class="breadcrumb-item">
-                 <a href="{% url 'app:home' %}"><i class="fa-solid fa-house"></i> Acceuil</a>
+                 <a href="{% url 'app:home' %}"><i class="fa-solid fa-house"></i> Accueil</a>
                </li>
-               <li class="breadcrumb-item active" aria-current="page">Product Details</li>
+               <li class="breadcrumb-item active" aria-current="page">Détails de la nourriture</li>
             </ol>
          </div>
          <div class="col-lg-5">
@@ -68,7 +68,7 @@
             <div class="available">
                <span>
                   <i class="fa-solid fa-check"></i>
-                  available
+                  disponible
                </span>
                <ul class="star">
                      <li><i class="fa-solid fa-star"></i></li>
@@ -77,7 +77,7 @@
                      <li><i class="fa-solid fa-star"></i></li>
                      <li><i class="fa-solid fa-star"></i></li>
                   </ul>
-               <h6>( 1 Review )</h6>
+               <h6>( {{item.item_reviews.count}} avis )</h6>
             </div>
             <div class="product-info ">
                <h3>
@@ -94,12 +94,12 @@
                      <input type="hidden" value="{{item.id}}" name="item-id" id="item-id">
                      <input type="hidden" value="0" name="oqty" id="oqty">
                      <button class="button" type="submit" value="submit">
-                        <span>Ajouter au pannier</span>
+                        <span>Ajouter au panier</span>
                      </button>
                   
                   </div>
                   <ul class="product_meta">
-                   <li><span class="theme-bg-clr">Tags:</span>
+                   <li><span class="theme-bg-clr">Mots clés:</span>
                      <ul class="pd-tag">
                         <li>
                         {% for tag in item.tags.all %}

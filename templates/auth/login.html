@@ -1,21 +1,21 @@
 
 {% extends 'partials/base.html' %}
 {% load static %}
-{% block title %}Login{% endblock title %}
+{% block title %}Connexion{% endblock title %}
 {% block content %}
 <section class="banner" style="background-image:url(/static/assets/img/background.png)">
    <div class="container">
       <div class="row align-items-center">
          <div class="col-lg-7">
             <div class="title-area-data">
-               <h2>Login</h2>
-               <p>A magical combination that sent aromas to the taste buds</p>
+               <h2>Connexion</h2>
+               <p>Une combinaison magique qui envoie des arômes aux papilles</p>
             </div>
             <ol class="breadcrumb">
                <li class="breadcrumb-item">
-                 <a href="{% url 'app:home' %}"><i class="fa-solid fa-house"></i> Acceuil</a>
+                 <a href="{% url 'app:home' %}"><i class="fa-solid fa-house"></i> Accueil</a>
                </li>
-               <li class="breadcrumb-item active" aria-current="page">login</li>
+               <li class="breadcrumb-item active" aria-current="page">connexion</li>
             </ol>
          </div>
          <div class="col-lg-5">
@@ -41,15 +41,15 @@
       <div class="row">
         <div class="col-lg-6" >
           <div class="box login">
-            <h3>Log In Your Account</h3>
+            <h3>Connectez-vous Votre compte</h3>
             <form method="POST">
               {% csrf_token %}
-              <input type="email" name="email" placeholder="Username or email address">
-              <input type="password" name="password" placeholder="Password">
+              <input type="email" name="email" placeholder="Nom d'utilisateur ou adresse e-mail">
+              <input type="password" name="password" placeholder="Mot de passe">
               <div class="remember">
                 <div class="first">
-                  <input type="checkbox" name="checkbox" id="checkbox">
-                  <!--<label for="checkbox">Remember me</label>-->
+                  <!--<input type="checkbox" name="checkbox" id="checkbox">
+                  <label for="checkbox">Remember me</label>-->
                 </div>
                 <div class="second">
                   <a href="{% url 'authuser:register' %}">Créer un compte</a>

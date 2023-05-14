@@ -48,7 +48,7 @@ def login_page(request):
             user = authenticate(request, email=email, password=password)
             if user is not None:
                 login(request, user)
-                messages.success(request, "Vous êtes connecté!!")
+                #messages.success(request, "Vous êtes connecté!!")
                 return redirect("app:home")
             else:
                 messages.error(request, "Cet utilisateur n'existe pas, veillez créer un compte!!")

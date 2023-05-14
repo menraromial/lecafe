@@ -38,9 +38,16 @@
                                     <div class="invoice-logo">
                                         <!-- logo started -->
                                         <div class="logo">
-                                           <a href="{% url 'admin:index' %}">
-                                            <img src="{% static 'assets/img/logo.png' %}" alt="logo">
-                                          </a>
+                                            {% if request.user.is_superuser %}
+                                            <a href="{% url 'admin:index' %}">
+                                                <img src="{% static 'assets/img/logo.png' %}" alt="logo">
+                                            </a>
+                                            {% else %}
+                                            <a href="{% url 'app:home' %}">
+                                                <img src="{% static 'assets/img/logo.png' %}" alt="logo">
+                                            </a>
+                                            {% endif %}
+
                                         </div>
                                         <!-- logo ended -->
                                     </div>
@@ -110,13 +117,28 @@
                                         <td class="text-end">fcfa {{order_item.get_cost}}</td>
                                     </tr>
                                     {% endfor %}
-
+                                    {% if order.coupon %}
+                                    <tr class="tr2">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-center">Sous Total</td>
+                                        <td class="text-end">fcfa{{ order.get_total_cost_before_discount|floatformat:2 }}</td>
+                                    </tr>
+                                    <tr class="tr2">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-center">"{{ order.coupon.code }}" coupon({{ order.discount }}% off)</td>
+                                        <td class="text-end">-fcfa{{ order.get_discount|floatformat:2 }}</td>
+                                    </tr>
+                                    {% endif %}
                                     <tr class="tr2">
                                         <td></td>
                                         <td></td>
                                         <td></td>
                                         <td class="text-center f-w-600 active-color">Grand Total</td>
-                                        <td class="f-w-600 text-end active-color">Fcfa {{order.get_total_cost}}</td>
+                                        <td class="f-w-600 text-end active-color">Fcfa {{order.get_total_cost|floatformat:2}}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -126,17 +148,22 @@
                             <div class="row">
                                 <div class="col-lg-6 col-md-8 col-sm-7">
                                     <div class="mb-30 dear-client">
-                                        <h3 class="inv-title-1">Termes & Conditions</h3>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been typesetting industry. Lorem Ipsum</p>
+                                       
+                                        {% if order.paid %}
+                                        <h3 class="inv-title-1">Payé <i class="fa-solid fa-circle-check" style="color: #28c83a;"></i></h3>
+                                        <p>Merci de nous faire confiance</p>
+                                        {% else %}
+                                        <h3 class="inv-title-1">Non Payée <i class="fa-solid fa-circle-xmark" style="color: #ee562f;"></i></h3>
+                                        <p>Veillez Payer Votre Facture</p>
+                                        {% endif %}
+                                        
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-4 col-sm-5">
                                     <div class="mb-30 payment-method">
                                         <h3 class="inv-title-1">Methode de paiement</h3>
                                         <ul class="payment-method-list-1 text-14">
-                                            <li><strong>Account No:</strong> 00 123 647 840</li>
-                                            <li><strong>Account Name:</strong> Jhon Doe</li>
-                                            <li><strong>Branch Name:</strong> xyz</li>
+                                            <li><strong>{{order.paymentMethod.nom}}</strong> </li>
                                         </ul>
                                     </div>
                                 </div>

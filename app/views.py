@@ -26,9 +26,6 @@ def about_page(request):
 
     return render(request, 'pages/about.html')
 
-def blog_view(request):
-
-    return render(request, "qr_code/index.html")
 
 def menu_view(request):
 
