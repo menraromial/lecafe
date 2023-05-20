@@ -72,6 +72,7 @@ class Item(models.Model):
     tags = TaggableManager(blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    #ingredients = models.ManyToManyField(Ingredient, through='ItemIngredients')
 
     class Meta:
         ordering = ['title']
@@ -100,6 +101,7 @@ class ItemImages(models.Model):
 class ItemIngredients(models.Model):
     item=models.ForeignKey(Item, on_delete=models.CASCADE, related_name='ingredients')
     ingredient=models.ForeignKey(Ingredient, on_delete=models.SET_NULL, null=True)
+    is_default = models.BooleanField(default=False)
     class Meta:
         verbose_name_plural="Item Ingredients"
     

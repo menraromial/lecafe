@@ -178,9 +178,10 @@
                     <div class="invoice-btn-section clearfix d-print-none">
                         
                         <form action="{% url "payment:process" %}" method="post">
-                            <input type="submit"class="btn btn-lg btn-print" value="Payer maintenant">
+                            <input type="submit"class="btn btn-lg btn-print" value="Payer avec Stripe">
                             {% csrf_token %}
                         </form>
+                        <a href="{% url 'payment:paypal_process' %}" class="btn btn-lg btn-download btn-theme" >Payer avec Paypal</a>
                        
                     </div>
                 </div>

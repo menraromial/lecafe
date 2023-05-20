@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     #Applications tiers
     #"django_resized ",
     "taggit",
+    "paypal.standard.ipn",
     #Applications
     "app.apps.AppConfig",
     "authuser.apps.AuthuserConfig",
@@ -163,3 +164,11 @@ STRIPE_PUBLISHABLE_KEY='pk_test_51N6VLaI0TlN0GZ9zypE1diZbJwEJuglpIHVKZ53HPLC7aec
 STRIPE_SECRET_KEY='sk_test_51N6VLaI0TlN0GZ9z1XGAdfjt4LDCBq1pZktJBsGEbLCup2z0km95sVLU01AB7vtn2rTzoqQQCk8DJdDF0FMWySg400Uh9z9JeJ'
 STRIPE_API_VERSION='2022-08-01'
 STRIPE_WEBHOOK_SECRET = 'whsec_a7ca7bfa1ccb7efff3ed7eefbd4c4c54b2aad537af467af6e3ea530cdf5a23d4'
+
+
+#PAYPAL
+PAYPAL_RECEIVER_EMAIL = 'romial.menra@enspy-uy1.cm'
+
+PAYPAL_TEST = True
+
+LOGIN_URL="authuser:login"

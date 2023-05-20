@@ -1,8 +1,8 @@
 from decimal import Decimal
 import stripe
 from django.conf import settings
-from django.shortcuts import render, redirect, reverse,\
-get_object_or_404
+from django.shortcuts import render, redirect, reverse,get_object_or_404
+from paypal.standard.forms import PayPalPaymentsForm
 from orders.models import Order
 # create the Stripe instance
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -59,3 +59,25 @@ def payment_completed(request):
 
 def payment_canceled(request):
     return render(request, 'payment/canceled.html')
+
+
+
+def paypal_process_payment(request):
+    order_id = request.session.get('order_id',None)
+    order = get_object_or_404(Order, id=order_id)
+    host = request.get_host()
+
+    paypal_dict = {
+        'business': settings.PAYPAL_RECEIVER_EMAIL,
+        'amount': '%.2f' % order.get_total_cost().quantize(
+            Decimal('.01')),
+        'item_name': 'Order {}'.format(order.id),
+        'invoice': str(order.id),
+        'currency_code': 'XAF',
+        'notify_url': 'http://{}{}'.format(host,reverse('payment:paypal-ipn')),
+        'return_url': 'http://{}{}'.format(host,reverse('payment:completed')),
+        'cancel_return': 'http://{}{}'.format(host,reverse('payment:canceled')),
+    }
+
+    form = PayPalPaymentsForm(initial=paypal_dict)
+    return render(request, 'payment/paypal_process.html', {'order': order, 'form': form})

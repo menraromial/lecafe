@@ -2,10 +2,21 @@
 
 jQuery(document).ready(function(){
 
+ // var ids = [];  // Tableau pour stocker les IDs
+
+
 
 //Add to cart functionality
 //From product details pages
-jQuery('#add_to_cart_form').on('submit',function(e) {  
+jQuery('#add_to_cart_form').on('submit',function(e) { 
+  var selectedCheckboxes = $('input[type="checkbox"]:checked');
+  var ids = [];
+  // Parcours des cases à cocher sélectionnées
+  selectedCheckboxes.each(function() {
+    var checkboxValue = $(this).attr('data-index');
+    ids.push(checkboxValue)
+  }); 
+
     jQuery.ajax({
         url:'/cart/add/', 
         data:jQuery(this).serialize(),
@@ -13,7 +24,8 @@ jQuery('#add_to_cart_form').on('submit',function(e) {
         success:function(response){
         $('#cartpopper').html(response.data)
         $('#cart-len').text(response.total_items)
-        //console.log('total_item',response.total_items)
+        console.log('Tous les ids', ids)
+
           //Success Message == 'Title', 'Message body', Last one leave as it is
         swal("Merci!", "Item ajouté au panier", "success");
         },
@@ -296,5 +308,33 @@ jQuery('#contact-form').on('submit',function(e) {
     });
     e.preventDefault(); //This is to Avoid Page Refresh and Fire the Event "Click"
 });
+
+
+    // Sélectionnez tous les checkboxes dans le conteneur
+    $('#checkboxContainer input[type="checkbox"]').change(function() {
+      var value = parseFloat($(this).val()); // Valeur du checkbox en tant que nombre
+      var index = $(this).attr('data-index')
+      var name = $('#name-'+index).text()
+
+      console.log("valeur", value, name)
+      // Vérifiez si le checkbox est coché ou décoché
+      if ($(this).is(':checked')) {
+          // Ajoutez un nouvel élément à la liste avec la valeur du checkbox
+          $('#itemList').append('<li data-index="' + index + '" data-value="' + value + '">' + name + '</li>');
+
+          // Ajoutez la valeur du checkbox à la valeur actuelle du span
+          var currentValue = parseFloat($('#total_price').text());
+          var sum = currentValue + value;
+          $('#total_price').text(sum);
+      } else {
+          // Supprimez l'élément correspondant de la liste
+          $('#itemList li[data-index="' + index + '"]').remove();
+
+          // Soustrayez la valeur du checkbox de la valeur actuelle du span
+          var currentValue = parseFloat($('#total_price').text());
+          var difference = currentValue - value;
+          $('#total_price').text(difference);
+      }
+  });
 
 })
