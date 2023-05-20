@@ -1,7 +1,7 @@
 {% if cart|length >= 1 %}
 <div class="row mt-5" id="total_price">
    <div class="col-lg-4">
-      
+      {% if request.user.is_authenticated %}
       <div class="coupon-area">
          <h3>Appliquer Coupon</h3>
          <div class="coupon">
@@ -11,7 +11,9 @@
             </button>
          </div>
    </div>
-      
+      {% else %}
+      <h4>Vous devez avoir un compte pour beneficier d'une reduction sur nos prix </h4>
+      {% endif %}   
       
    </div>
    <div class="col-lg-8">

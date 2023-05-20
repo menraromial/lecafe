@@ -13,8 +13,10 @@ def cart_add(request):
     item = get_object_or_404(Item, id=item_id)
     quantity = int(request.POST.get('qty'))
     override_quantity = int(request.POST.get('oqty'))
+    ids = request.POST.getlist('ids[]')
+    #print('ingredient ids', ids)
     if quantity:
-        cart.add(item=item,quantity=quantity, override_quantity=override_quantity)
+        cart.add(item=item,quantity=quantity,ids=ids, override_quantity=override_quantity)
         #print(cart.get_total_price())
     #cart.get_total_item_price(item_id)
     #print(cart.get_total_price())

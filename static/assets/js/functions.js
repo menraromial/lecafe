@@ -11,6 +11,10 @@ jQuery(document).ready(function(){
 jQuery('#add_to_cart_form').on('submit',function(e) { 
   var selectedCheckboxes = $('input[type="checkbox"]:checked');
   var ids = [];
+  var qty = $('#qty').val()
+  var token=$('input[name=csrfmiddlewaretoken]').val()
+  var item_id = $('#item-id').val()
+  var oqty = $('#oqty').val()
   // Parcours des cases à cocher sélectionnées
   selectedCheckboxes.each(function() {
     var checkboxValue = $(this).attr('data-index');
@@ -19,7 +23,13 @@ jQuery('#add_to_cart_form').on('submit',function(e) {
 
     jQuery.ajax({
         url:'/cart/add/', 
-        data:jQuery(this).serialize(),
+        data:{
+          'item-id':item_id,
+          'qty':qty,
+          'oqty':oqty,
+          'ids':ids,
+          csrfmiddlewaretoken:token
+            },
         type:'POST',
         success:function(response){
         $('#cartpopper').html(response.data)

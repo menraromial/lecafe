@@ -58,6 +58,8 @@ class Ingredient(models.Model):
 
     def get_absolute_url(self):
         return reverse("detail_ingredient", kwargs={"slug": self.slug})
+    def get_cost(self):
+        return self.cout
 
 
 class Item(models.Model):

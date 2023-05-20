@@ -1,7 +1,7 @@
 from decimal import Decimal
 from django.conf import settings
 
-from app.models import Item
+from app.models import Item,Ingredient
 from coupons.models import Coupon
 
 class Cart:
@@ -16,10 +16,19 @@ class Cart:
         # store current applied coupon
         self.coupon_id = self.session.get('coupon_id')
     # add item in the cart
-    def add(self, item,quantity=1,override_quantity=False):
+    def add(self, item,ids,quantity=1,override_quantity=False):
         item_id = str(item.id)
         if item_id not in self.cart:
-            self.cart[item_id] = {'quantity':0, 'price':str(item.price)}
+            ing_prices = Decimal(0)
+            ing_names =[]
+            if len(ids)>0:
+                
+                ingeredients = Ingredient.objects.filter(id__in=ids)
+                ing_prices = sum(ing.cout for ing in ingeredients)
+                ing_names = [ing.nom for ing in ingeredients]
+                #ing_names = ','.join(names)
+
+            self.cart[item_id] = {'quantity':0,'ingredients':ing_names, 'price':str(item.price+ing_prices)}
         if override_quantity:
             self.cart[item_id]['quantity'] = quantity
         else:
