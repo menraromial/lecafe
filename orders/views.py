@@ -42,10 +42,13 @@ def order_create(request):
             #items = Item.objects.filter(id__in=item_ids)
             for cart_item in cart:
                 item=Item.objects.get(id=cart_item['id'])
+                ingredients=cart_item['ingredients']
+                ing=','.join(ingredients)
                 OrderItem.objects.create(order=order,
                                         item = item,
                                         price=cart_item['price'],
-                                        quantity=cart_item['quantity'])
+                                        quantity=cart_item['quantity'],
+                                        ingredient_list=ing)
             # clear the cart
             cart.clear()
             # set the order in the session

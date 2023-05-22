@@ -195,7 +195,12 @@
                <form class="variations_form" role="form" method="post" id="add_to_cart_form">
                   <div class="deal-week mb-4 d-flex align-items-center"><h2 class="m-0"><span>Fcfa </span><span id="total_price">{{item.price}}</span></h2></div>
                   <h5>Ce qui est inclu</h5>
-                  <p>{{item.ingredients.all|join:", "}}</p>
+                  <p>{% for ing in item.ingredients.all %}
+                     {% if ing.is_default %}
+                     {{ing.ingredient.nom}},
+                     {% endif %}
+                     {% endfor %}
+                  </p>
                   <div class="d-flex align-items-center mt-4">
                      
                         {% csrf_token %}
@@ -227,6 +232,7 @@
       
       <!--Checkbox-->
       {% for ing in item.ingredients.all %}
+      {% if not ing.is_default %}
       <div class="checkbox-wrapper-33">
          <label class="checkbox">
            <input type="checkbox" value="{{ing.ingredient.cout}}" data-index="{{ing.ingredient.id}}"  class="checkbox__trigger visuallyhidden">
@@ -238,6 +244,7 @@
            <p class="checkbox__textwrapper" id="name-{{ing.ingredient.id}}">{{ing.ingredient.nom}}</p>
          </label>
       </div>
+      {% endif %}
       {% endfor %}
       <!--End checkbox-->
    </div>

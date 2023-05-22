@@ -16,7 +16,7 @@ class PaymentMethod(models.Model):
 
         
 class Order(models.Model):
-    fullname = models.CharField(max_length=50)
+    fullname = models.CharField(max_length=50, null=True, blank=True)
     #last_name = models.CharField(max_length=50)
     #email = models.EmailField()
     #address = models.CharField(max_length=250, default="Le Café")
@@ -65,6 +65,7 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order,related_name='items',on_delete=models.CASCADE)
     item = models.ForeignKey(Item,related_name='order_items',on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10,decimal_places=2)
+    ingredient_list=models.CharField(max_length=500, blank=True, null=True)
     quantity = models.PositiveIntegerField(default=1)
     def __str__(self):
         return str(self.id)

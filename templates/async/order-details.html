@@ -5,6 +5,7 @@
         <div class=" mb-1 text-primary">Total: {{order_item.get_cost}} Fcfa</div>
         <div class="mb-1 text-muted">Quantité : {{order_item.quantity}}</div>
         <p class="card-text mb-auto">{{order_item.item.description|truncatewords:14}}.</p>
+        <div class=" mb-1 text-primary">ingredients: {{order_item.ingredient_list}}</div>
         <a href="{{order_item.item.get_absolute_url}}" class="stretched-link">Details</a>
         </div>
         <div class="col-auto d-none d-lg-block">
